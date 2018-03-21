@@ -33,7 +33,12 @@ public class DemoController {
         log.info(String.format("查询第 %d 页数据，每页显示 %d 条数据", pageNum, pageSize));
         List<Demo> list = demoService.getAllUser(pageNum, pageSize);
         map.put("users", list);
-        return "index";
+        return "admin/index";
+    }
+
+    @GetMapping(value = "/wel")
+    public String wel(){
+        return "admin/welcome";
     }
 
 }
