@@ -106,12 +106,12 @@ h4 {
                         padding-left: 26px;
                         border-bottom: none;
                         font-weight: normal;
-                        {
+                        i{
                             font-weight: normal;
                         }
-                        //&:hover {
-                        //    text-decoration: none;
-                        //}
+                        &:hover {
+                            text-decoration: none;
+                        }
                     }
                     &.current>a,
                     &.current>a:hover {

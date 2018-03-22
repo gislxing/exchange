@@ -17,7 +17,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/bh_exchange?useUnicode=true&characterEncoding=utf-8&useSSL=true
     username: root
-    password: 1qaz
+    password: root
     tomcat:
       # 最大空闲连接数量
       max-idle: 50
