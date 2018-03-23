@@ -18,7 +18,7 @@ public class AdminIndexController {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "")
     public String index(){
         return "admin/index";
     }
