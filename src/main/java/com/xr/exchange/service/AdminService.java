@@ -29,4 +29,9 @@ public interface AdminService {
      * @param adminBean
      */
     boolean checkAdmin(AdminBean adminBean);
+    /**
+     * 登录验证
+     * @param adminBean
+     */
+    AdminBean loginAdmin(AdminBean adminBean);
 }

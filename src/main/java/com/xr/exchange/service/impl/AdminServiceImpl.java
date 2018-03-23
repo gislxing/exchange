@@ -31,6 +31,11 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private AdminDao adminDao;
 
+    /**
+     * 获取用户列表
+     * @param adminListBean
+     * @return
+     */
     @Override
     public Map<String, Object> getAllAdmin(AdminListBean adminListBean) {
         PageHelper.startPage(adminListBean.getPageNum(), adminListBean.getPageSize());
@@ -43,6 +48,10 @@ public class AdminServiceImpl implements AdminService {
         return map;
     }
 
+    /**
+     * 保存用户
+     * @param adminBean
+     */
     @Override
     public void saveAdmin(AdminBean adminBean) {
         adminBean.setStatus(1);
@@ -51,9 +60,25 @@ public class AdminServiceImpl implements AdminService {
         adminDao.saveAdmin(adminBean);
     }
 
+    /**
+     * 验证用户名是否重复
+     * @param adminBean
+     * @return
+     */
     @Override
     public boolean checkAdmin(AdminBean adminBean) {
         int count = adminDao.getCountAdmin(adminBean);
         return  count>0?false:true;
+    }
+
+    /**
+     * 登录
+     * @param adminBean
+     * @return
+     */
+    @Override
+    public AdminBean loginAdmin(AdminBean adminBean) {
+        AdminBean adminBeanSession = adminDao.getCountAdminLogin(adminBean);
+        return  adminBeanSession;
     }
 }

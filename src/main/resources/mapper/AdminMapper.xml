@@ -63,6 +63,9 @@
     <select id="getCountAdmin" resultType="int">
         select count(1) FROM t_admin WHERE username = trim(#{username})
     </select>
+    <select id="getCountAdminLogin" resultMap="baseResultMap">
+        select * FROM t_admin WHERE username = trim(#{username}) AND password = trim(#{password})
+    </select>
     <insert id="saveAdmin" parameterType="AdminBean"
             useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `t_admin` ( `username`, `password`, `realname`, `phone`, `lelevl`, `money`, `back_ratio`, `red_ratio`, `company_name`, `company_lead`, `company_phone`, `company_tel`, `company_address`, `parent_id`, `last_login_time`, `last_login_ip`, `status`, `add_time`) VALUES

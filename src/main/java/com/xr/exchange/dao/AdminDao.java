@@ -16,4 +16,5 @@ public interface AdminDao {
     List<AdminBean> getAllAdmin(AdminListBean adminListBean);
     void saveAdmin(AdminBean adminBean);
     int getCountAdmin(AdminBean adminBean);
+    AdminBean getCountAdminLogin(AdminBean adminBean);
 }
