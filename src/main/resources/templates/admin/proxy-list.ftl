@@ -66,11 +66,37 @@
             <td width="150">${admin.realname!}</td>
             <td width="150">${admin.money!}</td>
             <td width="130">${admin.lelevl!}</td>
-            <td width="100">${admin.lelevl!}</td>
+            <td width="100" class="user-status">
+                <#if (admin.status?exists && admin.status == 0)>
+                    <span class="label radius">已禁用</span>
+                <#elseif (admin.status?exists && admin.status == 1)>
+                    <span class="label label-success radius">启用</span>
+                <#else>
+                    <span class="label radius">状态错误</span>
+                </#if>
+            </td>
             <td width="100"><#if admin.addTime?exists>${admin.addTime?string("yyyy-MM-dd HH:mm:ss")}</#if></td>
             <td width="100">${admin.lastLoginIp!}</td>
-            <td width="100">${admin.lastLoginTime!}</td>
-            <td width="100"></td>
+            <td width="100"><#if admin.lastLoginTime?exists>${admin.lastLoginTime?string("yyyy-MM-dd HH:mm:ss")}</#if></td>
+            <td width="100">
+                <#if admin.status == 0>
+                    <a onClick="admin_start(this, '${admin.username}')" name="qaz" href="javascript:;" title="启用" style="text-decoration:none">
+                        <i class="Hui-iconfont">&#xe615;</i>
+                    </a>
+                <#elseif admin.status == 1>
+                    <a style="text-decoration:none" name="wsx" onClick="admin_stop(this, '${admin.username}')" href="javascript:;" title="禁用">
+                        <i class="Hui-iconfont">&#xe631;</i>
+                    </a>
+                </#if>
+                <a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','/admin/add/' + ${admin.id},'770','680')"
+                   class="ml-5" style="text-decoration:none">
+                    <i class="Hui-iconfont">&#xe6df;</i>
+                </a>
+                <#--<a title="删除" href="javascript:;" onclick="admin_del(this,'${admin.username}')" class="ml-5"-->
+                   <#--style="text-decoration:none">-->
+                    <#--<i class="Hui-iconfont">&#xe6e2;</i>-->
+                <#--</a>-->
+            </td>
         </tr>
         </#list>
         </#if>

@@ -38,9 +38,9 @@
         company_lead,
         company_phone,
         company_tel,
-        company_address
+        company_address,
         parent_id,
-        last_login_time
+        last_login_time,
         last_login_ip,
         status,
         add_time
@@ -51,13 +51,14 @@
         <include refid="base_column_list"/>
         from t_admin where 1=1
         <if test="conditions!=null and conditions!=''">
-            and (username LIKE '%' #{conditions} '%' or realname LIKE '%' #{conditions} '%' or phone LIKE '%' #{conditions} '%')
+            and (username LIKE '%' #{conditions} '%' or realname LIKE '%' #{conditions} '%' or phone LIKE '%'
+            #{conditions} '%')
         </if>
         <if test="addStartTime!=null and addStartTime!=''">
-            AND add_time &gt;=  CONCAT(#{addStartTime},' 00:00:00')
+            AND add_time &gt;= CONCAT(#{addStartTime},' 00:00:00')
         </if>
         <if test="addEndTime!=null and addEndTime!=''">
-            AND add_time &lt;=  CONCAT(#{addEndTime},' 23:59:59')
+            AND add_time &lt;= CONCAT(#{addEndTime},' 23:59:59')
         </if>
     </select>
     <select id="getCountAdmin" resultType="int">
@@ -71,4 +72,56 @@
         INSERT INTO `t_admin` ( `username`, `password`, `realname`, `phone`, `lelevl`, `money`, `back_ratio`, `red_ratio`, `company_name`, `company_lead`, `company_phone`, `company_tel`, `company_address`, `parent_id`, `last_login_time`, `last_login_ip`, `status`, `add_time`) VALUES
 	( TRIM(#{username}), #{password}, TRIM(#{realname}), TRIM(#{phone}), #{lelevl}, #{money},TRIM(#{backRatio}), TRIM(#{redRatio}), #{companyName}, #{companyLead}, #{companyPhone}, #{companyTel}, #{companyAddress}, #{parentId}, #{lastLoginTime}, #{lastLoginIp}, #{status}, #{addTime})
     </insert>
+
+    <update id="upateStatus" parameterType="string">
+        UPDATE t_admin set status = #{status} where username = #{username}
+    </update>
+
+    <delete id="delete" parameterType="string">
+        DELETE FROM t_admin WHERE username = #{username}
+    </delete>
+
+    <select id="getAdmin" parameterType="int" resultMap="baseResultMap">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM t_admin
+        WHERE id = #{id}
+    </select>
+
+    <update id="updateAdmin">
+        UPDATE t_admin SET
+        <if test="username != null and username != ''">
+            username = #{username, jdbcType=VARCHAR}
+        </if>
+        <if test="password != null and password != ''">
+            ,password = #{password, jdbcType=VARCHAR}
+        </if>
+        <if test="realname != null and realname != ''">
+            ,realname = #{realname, jdbcType=VARCHAR}
+        </if>
+        <if test="phone != null and phone != ''">
+            ,phone = #{phone, jdbcType=VARCHAR}
+        </if>
+        <if test="lelevl != null and lelevl != ''">
+            ,lelevl = #{lelevl, jdbcType=VARCHAR}
+        </if>
+        <if test="money != null and money != ''">
+            ,money = #{money, jdbcType=DOUBLE}
+        </if>
+        <if test="backRatio != null and backRatio != ''">
+            ,back_ratio = #{backRatio, jdbcType=FLOAT}
+        </if>
+        <if test="redRatio != null and redRatio != ''">
+            ,red_ratio = #{redRatio, jdbcType=FLOAT}
+        </if>
+        ,company_name = #{companyName, jdbcType=VARCHAR}
+        ,company_lead = #{companyLead, jdbcType=VARCHAR}
+        <if test="companyPhone != null and companyPhone != ''">
+            ,company_phone = #{companyPhone, jdbcType=VARCHAR}
+        </if>
+        ,company_tel = #{companyTel, jdbcType=VARCHAR}
+        ,company_address = #{companyAddress, jdbcType=VARCHAR}
+        WHERE id = #{id}
+    </update>
+
 </mapper>

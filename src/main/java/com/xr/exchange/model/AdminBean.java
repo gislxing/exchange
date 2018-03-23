@@ -9,7 +9,7 @@ import java.util.Date;
  * @create 2018/3/21.
  */
 public class AdminBean {
-    int id;
+    Integer id;
     String username;
     String password;
     String realname;
@@ -29,11 +29,11 @@ public class AdminBean {
     Integer status;
     Date addTime;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

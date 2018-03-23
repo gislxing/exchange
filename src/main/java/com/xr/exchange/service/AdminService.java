@@ -34,4 +34,30 @@ public interface AdminService {
      * @param adminBean
      */
     AdminBean loginAdmin(AdminBean adminBean);
+
+    /**
+     * 更新用户状态
+     * @param username
+     * @param status
+     */
+    void updateStatus(String username, String status);
+
+    /**
+     * 删除管理员
+     * @param username
+     */
+    void delete(String username);
+
+    /**
+     * 查询管理员
+     * @param id
+     * @return
+     */
+    AdminBean getAdmin(Integer id);
+
+    /**
+     * 修改管理员信息
+     * @param adminBean
+     */
+    void updateAdmin(AdminBean adminBean);
 }

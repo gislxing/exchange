@@ -13,70 +13,71 @@
 <body>
 <article class="page-container">
     <form class="form form-horizontal" id="form-admin-add">
+        <#--<input type="hidden" value="<#if data?exists>${data.id!}</#if>" name="id">-->
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户名：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text " required=true value="" placeholder="" id="username" name="username">
+                <input type="text" class="input-text " required=true value="<#if data?exists>${data.username!}</#if>" placeholder="" id="username" name="username">
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>真实姓名：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" required=true  value="" placeholder="真实姓名" id="realname" name="realname">
+                <input type="text" class="input-text" required=true  value="<#if data?exists>${data.realname!}</#if>" placeholder="真实姓名" id="realname" name="realname">
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>初始密码：</label>
+            <label class="form-label col-xs-4 col-sm-3"><#if !(data?exists)><span class="c-red">*</span></#if>初始密码：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="password" class="input-text"  value="" placeholder="密码" id="password"
+                <input type="password" class="input-text" <#if !(data?exists)>required=true</#if> value="" placeholder="密码" id="password"
                        name="password">
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>确认密码：</label>
+            <label class="form-label col-xs-4 col-sm-3"><#if !(data?exists)><span class="c-red">*</span></#if>确认密码：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="password" class="input-text" equalTo="#password" placeholder="确认新密码" id="password2"
+                <input type="password" class="input-text" <#if !(data?exists)>required=true</#if> equalTo="#password" placeholder="确认新密码" id="password2"
                        name="password2">
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text"  value="" placeholder="" id="phone" name="phone">
+                <input type="text" class="input-text"  value="<#if data?exists>${data.phone!}</#if>" placeholder="" id="phone" name="phone">
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手续费返佣比例：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" required=true range=[0,100] value="0" placeholder="" id="backRatio" name="backRatio">
+                <input type="text" class="input-text" required=true range=[0,100] value="<#if data?exists>${data.backRatio!}<#else>0</#if>" placeholder="" id="backRatio" name="backRatio">
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>红利返佣比例：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" required=true range=[0,100] value="0" placeholder="" id="redRatio" name="redRatio">
+                <input type="text" class="input-text" required=true range=[0,100] value="<#if data?exists>${data.redRatio!}<#else>0</#if>" placeholder="" id="redRatio" name="redRatio">
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>公司名称：</label>
+            <label class="form-label col-xs-4 col-sm-3">公司名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="" placeholder="" id="companyRame" name="companyRame">
+                <input type="text" class="input-text" value="<#if data?exists>${data.companyName!}</#if>" placeholder="" id="companyRame" name="companyRame">
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>公司负责人：</label>
+            <label class="form-label col-xs-4 col-sm-3">公司负责人：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="" placeholder="" id="companyPhone" name="companyPhone">
+                <input type="text" class="input-text" value="<#if data?exists>${data.companyLead!}</#if>" placeholder="" id="companyLead" name="companyLead">
             </div>
         </div><div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>公司固定电话：</label>
+            <label class="form-label col-xs-4 col-sm-3">公司固定电话：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="" placeholder="" id="companyTel" name="companyTel">
+                <input type="text" class="input-text" value="<#if data?exists>${data.companyTel!}</#if>" placeholder="" id="companyTel" name="companyTel">
             </div>
         </div><div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>公司地址：</label>
+            <label class="form-label col-xs-4 col-sm-3">公司地址：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="" placeholder="" id="companyAddress" name="companyAddress">
+                <input type="text" class="input-text" value="<#if data?exists>${data.companyAddress!}</#if>" placeholder="" id="companyAddress" name="companyAddress">
             </div>
         </div>
         <div class="row cl">
@@ -97,13 +98,6 @@
 
         $("#form-admin-add").validate({
             rules: {
-                password: {
-                    required: true,
-                },
-                password2: {
-                    required: true,
-                    equalTo: "#password"
-                },
                 phone: {
                     required: true,
                     isPhone: true,
@@ -115,16 +109,16 @@
             submitHandler: function (form) {
                 $(form).ajaxSubmit({
                     type: 'post',
-                    url: "/admin/save",
+                    url: <#if data?exists>"/admin/update"<#else>"/admin/save"</#if>,
                     success: function (data) {
                         if(data.flag=="success"){
-                            layer.msg('添加成功!',{icon:1,time:1000},function(){
+                            layer.msg(data.msg,{icon:1,time:1000},function(){
                                 var index = parent.layer.getFrameIndex(window.name);
                                 parent.location.reload();
                                 parent.layer.close(index);
                             });
                         }else {
-                            layer.msg('添加失败--'+data.msg,{icon:1,time:1000});
+                            layer.msg(data.msg,{icon:1,time:1000});
                         }
                     }
                 });
@@ -133,6 +127,5 @@
         });
     });
 </script>
-<!--/请在上方写此页面业务相关的脚本-->
 </body>
 </html>

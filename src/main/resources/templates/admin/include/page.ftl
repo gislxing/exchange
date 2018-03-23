@@ -26,7 +26,7 @@
             text-decoration: none;
         }
     </style>
-    <#if pageInfo?exists>
+    <#if pageInfo?exists && (pageInfo.pageNum > 0)>
         <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">当前显示 ${pageInfo.startRow!} 到 ${pageInfo.endRow!} ，共 ${pageInfo.total!} 条</div>
         <div class="dataTables_length" id="DataTables_Table_0_length"><label>每页显示
             <select name="DataTables_Table_0_length" pageSize="true" aria-controls="DataTables_Table_0" class="select">

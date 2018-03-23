@@ -81,4 +81,44 @@ public class AdminServiceImpl implements AdminService {
         AdminBean adminBeanSession = adminDao.getCountAdminLogin(adminBean);
         return  adminBeanSession;
     }
+
+    @Override
+    public void updateStatus(String username, String status) {
+        if (username == null || username.isEmpty()){
+            return;
+        }
+
+        if (status == null || status.isEmpty()){
+            return;
+        }
+
+        adminDao.upateStatus(username, status);
+    }
+
+    @Override
+    public void delete(String username) {
+        if (username == null || username.isEmpty()){
+            return;
+        }
+
+        adminDao.delete(username);
+    }
+
+    @Override
+    public AdminBean getAdmin(Integer id) {
+        if (id == null){
+            return null;
+        }
+
+        return adminDao.getAdmin(id);
+    }
+
+    @Override
+    public void updateAdmin(AdminBean adminBean) {
+        if (adminBean == null){
+            return;
+        }
+
+        adminDao.updateAdmin(adminBean);
+    }
 }

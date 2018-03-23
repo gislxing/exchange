@@ -2,6 +2,7 @@ package com.xr.exchange.dao;
 
 import com.xr.exchange.bean.AdminListBean;
 import com.xr.exchange.model.AdminBean;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,4 +18,12 @@ public interface AdminDao {
     void saveAdmin(AdminBean adminBean);
     int getCountAdmin(AdminBean adminBean);
     AdminBean getCountAdminLogin(AdminBean adminBean);
+
+    void upateStatus(@Param("username") String username, @Param("status") String status);
+
+    void delete(@Param("username") String username);
+
+    AdminBean getAdmin(@Param("id") Integer id);
+
+    void updateAdmin(AdminBean adminBean);
 }
