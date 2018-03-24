@@ -16,7 +16,7 @@
                                                href="javascript:location.replace(location.href);" title="刷新"><i
         class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-    <form id="adminListBean1" searchCond="true" name="adminListBean1" action="/admin/proxy/2" method="get">
+    <form id="adminListBean1" searchCond="true" name="adminListBean1" action="/admin/proxy/${showLevel}" method="get">
         <div class="text-c"> 注册时间：
             <input type="text" value="${searchData.addStartTime!}"
                    onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin"

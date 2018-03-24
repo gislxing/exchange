@@ -50,16 +50,13 @@
         select
         <include refid="base_column_list"/>
         from t_admin t
-        -- 第二级查询
         <if test="showLevel != null and showLevel != '' and (showLevel - loginAdmin.level) == 1">
             inner join t_admin ad on t.parent_id = ad.id
         </if>
-        -- 第三级查询
         <if test="showLevel != null and showLevel != '' and (showLevel - loginAdmin.level) == 2">
             inner join t_admin a on t.parent_id = a.id
             inner join t_admin ad on a.parent_id = ad.id
         </if>
-        -- 第四级级查询
         <if test="showLevel != null and showLevel != '' and (showLevel - loginAdmin.level) == 3">
             inner join t_admin a on t.parent_id = a.id
             inner join t_admin b on a.parent_id = b.id
@@ -67,7 +64,7 @@
         </if>
         where 1 = 1
         <if test="adminListBean.conditions!=null and adminListBean.conditions!=''">
-            and (t.username LIKE '%' #{adminListBean.conditions} '%' or realname LIKE '%' #{adminListBean.conditions} '%' or phone LIKE '%'
+            and (t.username LIKE '%' #{adminListBean.conditions} '%' or t.realname LIKE '%' #{adminListBean.conditions} '%' or t.phone LIKE '%'
             #{adminListBean.conditions} '%')
         </if>
         <if test="adminListBean.addStartTime!=null and adminListBean.addStartTime!=''">
