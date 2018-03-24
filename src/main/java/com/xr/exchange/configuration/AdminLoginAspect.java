@@ -13,16 +13,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * 登陆切面
+ * 管理员登陆切面
  *
  * @author Administrator
  * @create 2018/3/24.
  */
 @Component
 @Aspect
-public class LoginAspect {
+public class AdminLoginAspect {
 
-    @Pointcut("within(com.xr.exchange.controller..Admin*) && !within(com.xr.exchange.controller.AdminIndexController)")
+    // @Pointcut("within(com.xr.exchange.controller..Admin*) && !execution(* com.xr.exchange.controller.AdminIndexController.login(..))")
+    @Pointcut("execution(* com.xr.exchange.controller..Admin*.*(..)) && !execution(* com.xr.exchange.controller.AdminIndexController.login(..))")
     public void pointCut() {
     }
 
