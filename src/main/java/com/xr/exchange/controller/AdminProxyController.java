@@ -47,6 +47,7 @@ public class AdminProxyController {
         map.put(Const.STR_PAGE_INFO, dataMap.get(Const.STR_PAGE_INFO));
         map.put(Const.SIGN_ADMIN_SHOW_LEVEL, showLevel);
         map.put(Const.STR_SEARCH_CONDITIONS, adminListBean);
+        map.put(Const.SIGN_ADMIN_LEVEL, loginAdmin.getLevel());
 
         return "admin/proxy-list";
     }

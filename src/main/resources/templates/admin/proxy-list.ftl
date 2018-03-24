@@ -32,11 +32,24 @@
             </button>
         </div>
     </form>
+    <#if (showLevel == 2) && (level == 1)>
     <div class="cl pd-5 bg-1 bk-gray mt-20"><span class="l"><a
             href="javascript:;" onclick="admin_add('添加管理员','/admin/add','770','680')"
             class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a></span> <span
             class="r">共有数据：<strong>${pageInfo.total!"0"}</strong> 条</span></div>
-
+    </#if>
+    <#if (showLevel == 3) && (level == 2)>
+        <div class="cl pd-5 bg-1 bk-gray mt-20"><span class="l"><a
+                href="javascript:;" onclick="admin_add('添加管理员','/admin/add','770','680')"
+                class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a></span> <span
+                class="r">共有数据：<strong>${pageInfo.total!"0"}</strong> 条</span></div>
+    </#if>
+    <#if (showLevel == 4) && (level == 3)>
+        <div class="cl pd-5 bg-1 bk-gray mt-20"><span class="l"><a
+                href="javascript:;" onclick="admin_add('添加管理员','/admin/add','770','680')"
+                class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a></span> <span
+                class="r">共有数据：<strong>${pageInfo.total!"0"}</strong> 条</span></div>
+    </#if>
     <table class="table table-border table-bordered table-bg">
         <thead>
         <tr>
