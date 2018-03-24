@@ -3,6 +3,7 @@ package com.xr.exchange.controller;
 import com.xr.exchange.constants.Const;
 import com.xr.exchange.model.AdminBean;
 import com.xr.exchange.service.AdminService;
+import com.xr.exchange.utils.IpUtils;
 import com.xr.exchange.utils.VerifyUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.OutputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,7 +76,7 @@ public class AdminIndexController {
 
     /**
      * 登录
-     * @param response
+     * @param
      * @param session
      * @param imageCode
      * @param adminBean
@@ -82,7 +85,7 @@ public class AdminIndexController {
      */
     @PostMapping("/loginAdmin")
     @ResponseBody
-    public Map<String, Object> checkValiCode(HttpServletResponse response, HttpSession session, String imageCode, AdminBean adminBean) throws Exception{
+    public Map<String, Object> checkValiCode(HttpServletRequest request, HttpSession session, String imageCode, AdminBean adminBean) throws Exception{
         Map<String,Object> map = new HashMap<>();
         String code = (String)session.getAttribute("imageCode");
         String msg = "";
@@ -95,6 +98,11 @@ public class AdminIndexController {
                 adminBean.setPassword(DigestUtils.md5Hex(adminBean.getPassword()));
                 AdminBean adminBeanSession = adminService.loginAdmin(adminBean);
                 if (adminBeanSession!=null){
+                    AdminBean adminBean1 = new AdminBean();
+                    adminBean1.setLastLoginIp(request.getLocalAddr());
+                     adminBean1.setLastLoginTime(new Date());
+                    adminBean1.setId(adminBeanSession.getId());
+                    adminService.updateAdmin(adminBean1);
                     session.setAttribute(Const.KEY_SESSION_LOGIN_ADMIN,adminBeanSession);
                     flag = "success";
                     msg = "登录成功！";
@@ -104,6 +112,7 @@ public class AdminIndexController {
                 }
 
             }catch (Exception ex){
+                log.error("登录失败", ex);
                 flag = "failed";
                 msg = "登录失败！";
             }

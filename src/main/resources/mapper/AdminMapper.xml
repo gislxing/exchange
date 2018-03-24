@@ -64,7 +64,8 @@
         </if>
         where 1 = 1
         <if test="adminListBean.conditions!=null and adminListBean.conditions!=''">
-            and (t.username LIKE '%' #{adminListBean.conditions} '%' or t.realname LIKE '%' #{adminListBean.conditions} '%' or t.phone LIKE '%'
+            and (t.username LIKE '%' #{adminListBean.conditions} '%' or t.realname LIKE '%' #{adminListBean.conditions}
+            '%' or t.phone LIKE '%'
             #{adminListBean.conditions} '%')
         </if>
         <if test="adminListBean.addStartTime!=null and adminListBean.addStartTime!=''">
@@ -121,7 +122,7 @@
         <if test="phone != null and phone != ''">
             ,phone = #{phone, jdbcType=VARCHAR}
         </if>
-        <if test="lelevl != null and lelevl != ''">
+        <if test="level != null and level != ''">
             ,level = #{level, jdbcType=INTEGER}
         </if>
         <if test="money != null and money != ''">
@@ -133,13 +134,28 @@
         <if test="redRatio != null and redRatio != ''">
             ,red_ratio = #{redRatio, jdbcType=FLOAT}
         </if>
-        ,company_name = #{companyName, jdbcType=VARCHAR}
-        ,company_lead = #{companyLead, jdbcType=VARCHAR}
+        <if test="companyName != null and companyName != ''">
+            ,company_name = #{companyName, jdbcType=VARCHAR}
+        </if>
+        <if test="companyLead != null and companyLead != ''">
+            ,company_lead = #{companyLead, jdbcType=VARCHAR}
+        </if>
         <if test="companyPhone != null and companyPhone != ''">
             ,company_phone = #{companyPhone, jdbcType=VARCHAR}
         </if>
-        ,company_tel = #{companyTel, jdbcType=VARCHAR}
-        ,company_address = #{companyAddress, jdbcType=VARCHAR}
+        <if test="lastLoginTime != null">
+            <if test="username != null and username != ''">,</if>
+            last_login_time = #{lastLoginTime, jdbcType=TIMESTAMP}
+        </if>
+        <if test="lastLoginIp != null and lastLoginIp != ''">
+            ,last_login_ip = #{lastLoginIp, jdbcType=VARCHAR}
+        </if>
+        <if test="companyTel != null and companyTel != ''">
+            ,company_tel = #{companyTel, jdbcType=VARCHAR}
+        </if>
+        <if test="companyAddress != null and companyAddress != ''">
+            ,company_address = #{companyAddress, jdbcType=VARCHAR}
+        </if>
         WHERE id = #{id}
     </update>
 

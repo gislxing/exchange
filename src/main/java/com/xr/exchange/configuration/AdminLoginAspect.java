@@ -23,7 +23,10 @@ import javax.servlet.http.HttpSession;
 public class AdminLoginAspect {
 
     // @Pointcut("within(com.xr.exchange.controller..Admin*) && !execution(* com.xr.exchange.controller.AdminIndexController.login(..))")
-    @Pointcut("execution(* com.xr.exchange.controller..Admin*.*(..)) && !execution(* com.xr.exchange.controller.AdminIndexController.login(..)) && !execution(* com.xr.exchange.controller.AdminIndexController.valicode(..))")
+    @Pointcut("execution(* com.xr.exchange.controller..Admin*.*(..)) " +
+            "&& !execution(* com.xr.exchange.controller.AdminIndexController.login(..)) " +
+            "&& !execution(* com.xr.exchange.controller.AdminIndexController.valicode(..))" +
+            "&& !execution(* com.xr.exchange.controller.AdminIndexController.checkValiCode(..))")
     public void pointCut() {
     }
 
