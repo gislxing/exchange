@@ -52,4 +52,40 @@ public interface Const {
      * 失败标志
      */
     String FAILED_FLAG = "failed";
+
+    /**
+     * 管理员等级：交易所
+     */
+    Integer ADMIN_LEVEL_EXCHANGE = 1;
+
+    /**
+     * 管理员等级：运营中心
+     */
+    Integer ADMIN_LEVEL_OPERATION_CENTER = 2;
+
+    /**
+     * 管理员等级：综合会员
+     */
+    Integer ADMIN_LEVEL_COMPREHENSIVE_MEMBER = 3;
+
+    /**
+     * 管理员等级：微圈代理
+     */
+    Integer ADMIN_LEVEL_MICRO_PROXY = 4;
+
+    /**
+     * session 中保存的登陆用户 key
+     */
+    String KEY_SESSION_LOGIN_ADMIN = "adminBean";
+
+    /**
+     * 登陆用户等级标示
+     */
+    String SIGN_LOGIN_ADMIN_LEVEL = "loginAdminLevel";
+
+    /**
+     * 显示的管理员等级
+     */
+    String SIGN_ADMIN_SHOW_LEVEL = "showLevel";
+
 }

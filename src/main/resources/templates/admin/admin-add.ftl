@@ -13,7 +13,7 @@
 <body>
 <article class="page-container">
     <form class="form form-horizontal" id="form-admin-add">
-        <#--<input type="hidden" value="<#if data?exists>${data.id!}</#if>" name="id">-->
+        <input type="hidden" value="<#if data?exists>${data.id!}</#if>" name="id">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户名：</label>
             <div class="formControls col-xs-8 col-sm-9">

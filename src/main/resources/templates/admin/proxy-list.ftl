@@ -16,7 +16,7 @@
                                                href="javascript:location.replace(location.href);" title="刷新"><i
         class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-    <form id="adminListBean1" searchCond="true" name="adminListBean1" action="/admin/proxy" method="get">
+    <form id="adminListBean1" searchCond="true" name="adminListBean1" action="/admin/proxy/2" method="get">
         <div class="text-c"> 注册时间：
             <input type="text" value="${searchData.addStartTime!}"
                    onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin"
@@ -65,7 +65,7 @@
             <td width="90">${admin.phone!}</td>
             <td width="150">${admin.realname!}</td>
             <td width="150">${admin.money!}</td>
-            <td width="130">${admin.lelevl!}</td>
+            <td width="130">${admin.showLevel!}</td>
             <td width="100" class="user-status">
                 <#if (admin.status?exists && admin.status == 0)>
                     <span class="label radius">已禁用</span>

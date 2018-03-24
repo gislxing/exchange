@@ -41,10 +41,15 @@
             <dd>
                 <ul>
                     <li><a data-href="/wel" data-title="密码修改" href="javascript:void(0)">密码修改</a></li>
-                    <li><a data-href="/admin/proxy" data-title="运营中心管理" href="javascript:void(0)">运营中心管理</a>
-                    </li>
-                    <li><a data-href="/admin/proxy" data-title="综合会员管理" href="javascript:void(0)">综合会员管理</a></li>
-                    <li><a data-href="/admin/proxy" data-title="微圈代理管理" href="javascript:void(0)">微圈代理管理</a></li>
+                    <#if loginAdminLevel == 1>
+                        <li><a data-href="/admin/proxy/2" data-title="运营中心管理" href="javascript:void(0)">运营中心管理</a></li>
+                    </#if>
+                    <#if (loginAdminLevel <= 2) && (loginAdminLevel >= 1)>
+                        <li><a data-href="/admin/proxy/3" data-title="综合会员管理" href="javascript:void(0)">综合会员管理</a></li>
+                    </#if>
+                    <#if (loginAdminLevel <= 3) && (loginAdminLevel >= 1)>
+                        <li><a data-href="/admin/proxy/4" data-title="微圈代理管理" href="javascript:void(0)">微圈代理管理</a></li>
+                    </#if>
                 </ul>
             </dd>
         </dl>

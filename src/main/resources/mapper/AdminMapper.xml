@@ -8,7 +8,7 @@
         <id column="password" property="password" jdbcType="VARCHAR"/>
         <id column="realname" property="realname" jdbcType="VARCHAR"/>
         <id column="phone" property="phone" jdbcType="VARCHAR"/>
-        <id column="lelevl" property="lelevl" jdbcType="VARCHAR"/>
+        <id column="level" property="level" jdbcType="INTEGER"/>
         <id column="money" property="money" jdbcType="DECIMAL"/>
         <id column="back_ratio" property="backRatio" jdbcType="FLOAT"/>
         <id column="red_ratio" property="redRatio" jdbcType="FLOAT"/>
@@ -30,7 +30,7 @@
         password,
         realname,
         phone,
-        lelevl,
+        level,
         money,
         back_ratio,
         red_ratio,
@@ -49,28 +49,41 @@
     <select id="getAllAdmin" resultMap="baseResultMap">
         select
         <include refid="base_column_list"/>
-        from t_admin where 1=1
-        <if test="conditions!=null and conditions!=''">
-            and (username LIKE '%' #{conditions} '%' or realname LIKE '%' #{conditions} '%' or phone LIKE '%'
-            #{conditions} '%')
+        from t_admin t where 1=1
+        <if test="adminListBean.conditions!=null and adminListBean.conditions!=''">
+            and (username LIKE '%' #{adminListBean.conditions} '%' or realname LIKE '%' #{adminListBean.conditions} '%' or phone LIKE '%'
+            #{adminListBean.conditions} '%')
         </if>
-        <if test="addStartTime!=null and addStartTime!=''">
-            AND add_time &gt;= CONCAT(#{addStartTime},' 00:00:00')
+        <if test="adminListBean.addStartTime!=null and adminListBean.addStartTime!=''">
+            AND add_time &gt;= CONCAT(#{adminListBean.addStartTime},' 00:00:00')
         </if>
-        <if test="addEndTime!=null and addEndTime!=''">
-            AND add_time &lt;= CONCAT(#{addEndTime},' 23:59:59')
+        <if test="adminListBean.addEndTime!=null and adminListBean.addEndTime!=''">
+            AND add_time &lt;= CONCAT(#{adminListBean.addEndTime},' 23:59:59')
+        </if>
+        <if test="showLevel != null and showLevel != ''">
+            AND level = #{showLevel}
+        </if>
+        <if test="loginAdminId != null and loginAdminId != '' and showLevel == 2">
+            AND parent_id = #{loginAdminId}
+        </if>
+        <if test="loginAdminId != null and loginAdminId != '' and showLevel == 3">
+          AND EXISTS ( SELECT * FROM t_admin b WHERE 1 = 1 AND parent_id = #{loginAdminId} AND t.parent_id = b.id )
+--           AND EXISTS ( SELECT id FROM t_admin WHERE 1 = 1 AND EXISTS ( SELECT id FROM t_admin WHERE parent_id = #{loginAdminId} ) )
         </if>
     </select>
+
     <select id="getCountAdmin" resultType="int">
         select count(1) FROM t_admin WHERE username = trim(#{username})
     </select>
+
     <select id="getCountAdminLogin" resultMap="baseResultMap">
         select * FROM t_admin WHERE username = trim(#{username}) AND password = trim(#{password})
     </select>
+
     <insert id="saveAdmin" parameterType="AdminBean"
             useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO `t_admin` ( `username`, `password`, `realname`, `phone`, `lelevl`, `money`, `back_ratio`, `red_ratio`, `company_name`, `company_lead`, `company_phone`, `company_tel`, `company_address`, `parent_id`, `last_login_time`, `last_login_ip`, `status`, `add_time`) VALUES
-	( TRIM(#{username}), #{password}, TRIM(#{realname}), TRIM(#{phone}), #{lelevl}, #{money},TRIM(#{backRatio}), TRIM(#{redRatio}), #{companyName}, #{companyLead}, #{companyPhone}, #{companyTel}, #{companyAddress}, #{parentId}, #{lastLoginTime}, #{lastLoginIp}, #{status}, #{addTime})
+        INSERT INTO `t_admin` ( `username`, `password`, `realname`, `phone`, `level`, `money`, `back_ratio`, `red_ratio`, `company_name`, `company_lead`, `company_phone`, `company_tel`, `company_address`, `parent_id`, `last_login_time`, `last_login_ip`, `status`, `add_time`) VALUES
+	( TRIM(#{username}), #{password}, TRIM(#{realname}), TRIM(#{phone}), #{level}, #{money},TRIM(#{backRatio}), TRIM(#{redRatio}), #{companyName}, #{companyLead}, #{companyPhone}, #{companyTel}, #{companyAddress}, #{parentId}, #{lastLoginTime}, #{lastLoginIp}, #{status}, #{addTime})
     </insert>
 
     <update id="upateStatus" parameterType="string">
@@ -103,7 +116,7 @@
             ,phone = #{phone, jdbcType=VARCHAR}
         </if>
         <if test="lelevl != null and lelevl != ''">
-            ,lelevl = #{lelevl, jdbcType=VARCHAR}
+            ,level = #{level, jdbcType=INTEGER}
         </if>
         <if test="money != null and money != ''">
             ,money = #{money, jdbcType=DOUBLE}

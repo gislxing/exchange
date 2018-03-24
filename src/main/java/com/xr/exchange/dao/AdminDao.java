@@ -14,9 +14,12 @@ import java.util.List;
  */
 public interface AdminDao {
 
-    List<AdminBean> getAllAdmin(AdminListBean adminListBean);
+    List<AdminBean> getAllAdmin(@Param("adminListBean") AdminListBean adminListBean, @Param("showLevel") Integer showLevel, @Param("loginAdminId") Integer loginAdminId);
+
     void saveAdmin(AdminBean adminBean);
+
     int getCountAdmin(AdminBean adminBean);
+
     AdminBean getCountAdminLogin(AdminBean adminBean);
 
     void upateStatus(@Param("username") String username, @Param("status") String status);

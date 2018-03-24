@@ -9,12 +9,14 @@ import java.util.Date;
  * @create 2018/3/21.
  */
 public class AdminBean {
+    private String[] adminLevel = {"", "交易所", "运营中心", "综合会员", "微圈代理"};
+
     Integer id;
     String username;
     String password;
     String realname;
     String phone;
-    String lelevl;
+    int level;
     Double money;
     Float backRatio;
     Float redRatio;
@@ -28,6 +30,16 @@ public class AdminBean {
     String lastLoginIp;
     Integer status;
     Date addTime;
+
+    String showLevel;
+
+    public String getShowLevel() {
+        return showLevel;
+    }
+
+    public void setShowLevel(int level) {
+        this.showLevel = adminLevel[level];
+    }
 
     public Integer getId() {
         return id;
@@ -69,12 +81,13 @@ public class AdminBean {
         this.phone = phone;
     }
 
-    public String getLelevl() {
-        return lelevl;
+    public int getLevel() {
+        return level;
     }
 
-    public void setLelevl(String lelevl) {
-        this.lelevl = lelevl;
+    public void setLevel(int level) {
+        this.setShowLevel(level);
+        this.level = level;
     }
 
     public Double getMoney() {

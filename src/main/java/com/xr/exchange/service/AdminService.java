@@ -17,7 +17,7 @@ public interface AdminService {
      * @param adminListBean
      * @return
      */
-    Map<String, Object> getAllAdmin(AdminListBean adminListBean);
+    Map<String, Object> getAllAdmin(AdminListBean adminListBean, Integer showLevel, Integer loginAdminId);
 
     /**
      * 保存

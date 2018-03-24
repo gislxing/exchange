@@ -1,5 +1,6 @@
 package com.xr.exchange.controller;
 
+import com.xr.exchange.constants.Const;
 import com.xr.exchange.model.AdminBean;
 import com.xr.exchange.service.AdminService;
 import com.xr.exchange.utils.VerifyUtil;
@@ -88,7 +89,7 @@ public class AdminIndexController {
                 adminBean.setPassword(DigestUtils.md5Hex(adminBean.getPassword()));
                 AdminBean adminBeanSession = adminService.loginAdmin(adminBean);
                 if (adminBeanSession!=null){
-                    session.setAttribute("adminBean",adminBeanSession);
+                    session.setAttribute(Const.KEY_SESSION_LOGIN_ADMIN,adminBeanSession);
                     flag = "success";
                     msg = "登录成功！";
                 }else {
@@ -106,8 +107,11 @@ public class AdminIndexController {
         map.put("flag",flag);
         return map;
     }
+
     @GetMapping("/index")
-    public String index(){
+    public String index(HttpSession session, Map<String, Object> map){
+        AdminBean adminBean = (AdminBean) session.getAttribute(Const.KEY_SESSION_LOGIN_ADMIN);
+        map.put(Const.SIGN_LOGIN_ADMIN_LEVEL, adminBean.getLevel());
         return "admin/index";
     }
 }
