@@ -60,4 +60,9 @@ public interface AdminService {
      * @param adminBean
      */
     void updateAdmin(AdminBean adminBean);
+    /**
+     * 修改密码
+     * @param adminBean
+     */
+    Integer upPassword(String oldpassword, String password, int id);
 }

@@ -7,6 +7,7 @@ import com.xr.exchange.constants.Const;
 import com.xr.exchange.dao.AdminDao;
 import com.xr.exchange.model.AdminBean;
 import com.xr.exchange.service.AdminService;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,5 +122,12 @@ public class AdminServiceImpl implements AdminService {
         }
 
         adminDao.updateAdmin(adminBean);
+    }
+
+    @Override
+    public Integer upPassword(String oldpassword, String password, int id) {
+        oldpassword = DigestUtils.md5Hex(oldpassword);
+        password = DigestUtils.md5Hex(password);
+        return adminDao.upPassword(oldpassword,password,id);
     }
 }

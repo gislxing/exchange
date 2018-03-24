@@ -82,7 +82,9 @@
     <select id="getCountAdmin" resultType="int">
         select count(1) FROM t_admin WHERE username = trim(#{username})
     </select>
-
+    <update id="upPassword">
+        update  t_admin set password = #{password} WHERE password = #{oldpassword} AND  id = #{id}
+    </update>
     <select id="getCountAdminLogin" resultMap="baseResultMap">
         select * FROM t_admin WHERE username = trim(#{username}) AND password = trim(#{password}) AND status = 1
     </select>

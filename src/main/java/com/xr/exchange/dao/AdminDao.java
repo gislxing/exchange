@@ -29,4 +29,6 @@ public interface AdminDao {
     AdminBean getAdmin(@Param("id") Integer id);
 
     void updateAdmin(AdminBean adminBean);
+
+    Integer upPassword(@Param("oldpassword") String oldpassword, @Param("password") String password, @Param("id") int id);
 }

@@ -40,7 +40,7 @@
             <dt><i class="Hui-iconfont">&#xe6d8;</i> 代理管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a data-href="/wel" data-title="密码修改" href="javascript:void(0)">密码修改</a></li>
+                    <li><a data-href="/admin/password/update" data-title="密码修改" href="javascript:void(0)">密码修改</a></li>
                     <#if loginAdminLevel == 1>
                         <li><a data-href="/admin/proxy/2" data-title="运营中心管理" href="javascript:void(0)">运营中心管理</a></li>
                     </#if>

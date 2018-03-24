@@ -204,5 +204,46 @@ public class AdminProxyController {
 
         return map;
     }
+    /**
+     * 跳转修改密码页面
+     *
+     * @param
+     * @return
+     */
+    @GetMapping("/password/update")
+    public String passwordUpdate() {
+        return "admin/password-update";
+    }
+    /**
+     * 修改密码
+     *
+     * @param
+     * @return
+     */
+    @PostMapping("/password/updatesave")
+    @ResponseBody
+    public Map<String, Object>  passwordUpdateSave(HttpSession session,String oldpassword,String password) {
+        Map<String, Object> map = new HashMap<>();
+        AdminBean loginAdmin = (AdminBean) session.getAttribute(Const.KEY_SESSION_LOGIN_ADMIN);
+        String msg = "";
+        String flag ="";
+        try {
+            Integer i = adminService.upPassword(oldpassword,password,loginAdmin.getId());
+            if(i == null){
+                flag = Const.FAILED_FLAG;
+                msg = "原始密码错误！";
+            }else{
+                msg = "密码修改成功";
+                flag = Const.SUCCESS_FLAG;
+            }
+        } catch (Exception e) {
+            log.error("修改管理员信息失败", e);
+            flag = Const.FAILED_FLAG;
+            msg = "密码修改失败！";
+        }
+        map.put(Const.STR_MSG, msg);
+        map.put(Const.STR_FLAG, flag);
 
+        return map;
+    }
 }
