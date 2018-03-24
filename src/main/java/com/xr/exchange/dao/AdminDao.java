@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface AdminDao {
 
-    List<AdminBean> getAllAdmin(@Param("adminListBean") AdminListBean adminListBean, @Param("showLevel") Integer showLevel, @Param("loginAdminId") Integer loginAdminId);
+    List<AdminBean> getAllAdmin(@Param("adminListBean") AdminListBean adminListBean, @Param("showLevel") Integer showLevel, @Param("loginAdmin") AdminBean loginAdmin);
 
     void saveAdmin(AdminBean adminBean);
 

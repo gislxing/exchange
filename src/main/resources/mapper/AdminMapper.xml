@@ -25,50 +25,59 @@
     </resultMap>
 
     <sql id="base_column_list">
-        id,
-        username,
-        password,
-        realname,
-        phone,
-        level,
-        money,
-        back_ratio,
-        red_ratio,
-        company_name,
-        company_lead,
-        company_phone,
-        company_tel,
-        company_address,
-        parent_id,
-        last_login_time,
-        last_login_ip,
-        status,
-        add_time
+        t.id,
+        t.username,
+        t.password,
+        t.realname,
+        t.phone,
+        t.level,
+        t.money,
+        t.back_ratio,
+        t.red_ratio,
+        t.company_name,
+        t.company_lead,
+        t.company_phone,
+        t.company_tel,
+        t.company_address,
+        t.parent_id,
+        t.last_login_time,
+        t.last_login_ip,
+        t.status,
+        t.add_time
     </sql>
 
     <select id="getAllAdmin" resultMap="baseResultMap">
         select
         <include refid="base_column_list"/>
-        from t_admin t where 1=1
+        from t_admin t
+        -- 第二级查询
+        <if test="showLevel != null and showLevel != '' and (showLevel - loginAdmin.level) == 1">
+            inner join t_admin ad on t.parent_id = ad.id
+        </if>
+        -- 第三级查询
+        <if test="showLevel != null and showLevel != '' and (showLevel - loginAdmin.level) == 2">
+            inner join t_admin a on t.parent_id = a.id
+            inner join t_admin ad on a.parent_id = ad.id
+        </if>
+        -- 第四级级查询
+        <if test="showLevel != null and showLevel != '' and (showLevel - loginAdmin.level) == 3">
+            inner join t_admin a on t.parent_id = a.id
+            inner join t_admin b on a.parent_id = b.id
+            inner join t_admin ad on b.parent_id = ad.id
+        </if>
+        where 1 = 1
         <if test="adminListBean.conditions!=null and adminListBean.conditions!=''">
-            and (username LIKE '%' #{adminListBean.conditions} '%' or realname LIKE '%' #{adminListBean.conditions} '%' or phone LIKE '%'
+            and (t.username LIKE '%' #{adminListBean.conditions} '%' or realname LIKE '%' #{adminListBean.conditions} '%' or phone LIKE '%'
             #{adminListBean.conditions} '%')
         </if>
         <if test="adminListBean.addStartTime!=null and adminListBean.addStartTime!=''">
-            AND add_time &gt;= CONCAT(#{adminListBean.addStartTime},' 00:00:00')
+            AND t.add_time &gt;= CONCAT(#{adminListBean.addStartTime},' 00:00:00')
         </if>
         <if test="adminListBean.addEndTime!=null and adminListBean.addEndTime!=''">
-            AND add_time &lt;= CONCAT(#{adminListBean.addEndTime},' 23:59:59')
+            AND t.add_time &lt;= CONCAT(#{adminListBean.addEndTime},' 23:59:59')
         </if>
-        <if test="showLevel != null and showLevel != ''">
-            AND level = #{showLevel}
-        </if>
-        <if test="loginAdminId != null and loginAdminId != '' and showLevel == 2">
-            AND parent_id = #{loginAdminId}
-        </if>
-        <if test="loginAdminId != null and loginAdminId != '' and showLevel == 3">
-          AND EXISTS ( SELECT * FROM t_admin b WHERE 1 = 1 AND parent_id = #{loginAdminId} AND t.parent_id = b.id )
---           AND EXISTS ( SELECT id FROM t_admin WHERE 1 = 1 AND EXISTS ( SELECT id FROM t_admin WHERE parent_id = #{loginAdminId} ) )
+        <if test="loginAdmin.id != null and loginAdmin.id != ''">
+            AND ad.id = #{loginAdmin.id}
         </if>
     </select>
 
@@ -97,7 +106,7 @@
     <select id="getAdmin" parameterType="int" resultMap="baseResultMap">
         SELECT
         <include refid="base_column_list"/>
-        FROM t_admin
+        FROM t_admin t
         WHERE id = #{id}
     </select>
 

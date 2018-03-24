@@ -42,7 +42,7 @@ public class AdminProxyController {
     public String adminList(AdminListBean adminListBean, @PathVariable("showLevel") Integer showLevel, HttpSession session, Map<String, Object> map) {
         AdminBean loginAdmin = (AdminBean) session.getAttribute(Const.KEY_SESSION_LOGIN_ADMIN);
 
-        Map<String, Object> dataMap = adminService.getAllAdmin(adminListBean, showLevel, loginAdmin.getId());
+        Map<String, Object> dataMap = adminService.getAllAdmin(adminListBean, showLevel, loginAdmin);
         map.put(Const.STR_DATA, dataMap.get(Const.STR_DATA));
         map.put(Const.STR_PAGE_INFO, dataMap.get(Const.STR_PAGE_INFO));
         map.put(Const.SIGN_ADMIN_SHOW_LEVEL, showLevel);

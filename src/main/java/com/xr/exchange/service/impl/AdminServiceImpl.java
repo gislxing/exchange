@@ -37,9 +37,9 @@ public class AdminServiceImpl implements AdminService {
      * @return
      */
     @Override
-    public Map<String, Object> getAllAdmin(AdminListBean adminListBean, Integer showLevel, Integer loginAdminId) {
+    public Map<String, Object> getAllAdmin(AdminListBean adminListBean, Integer showLevel, AdminBean loginAdmin) {
         PageHelper.startPage(adminListBean.getPageNum(), adminListBean.getPageSize());
-        List<AdminBean> list = adminDao.getAllAdmin(adminListBean, showLevel, loginAdminId);
+        List<AdminBean> list = adminDao.getAllAdmin(adminListBean, showLevel, loginAdmin);
 
         // 分页信息包括总页数，当前页，总数据等
         PageInfo pageInfo = new PageInfo(list);
