@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `t_admin` (
   `password` varchar(50) DEFAULT NULL COMMENT '密码',
   `realname` varchar(20) DEFAULT NULL COMMENT '真实名称',
   `phone` varchar(20) DEFAULT NULL COMMENT '手机号',
-  `lelevl` varchar(20) DEFAULT NULL COMMENT '用户代理等级,1,交易所，2运营中心，3综合会员，4微圈代理',
+  `level` varchar(20) DEFAULT NULL COMMENT '用户代理等级,1,交易所，2运营中心，3综合会员，4微圈代理',
   `money` decimal(20,2) DEFAULT '0.00' COMMENT '账户余额',
   `back_ratio` float(8,2) NOT NULL DEFAULT '0.00' COMMENT '手续费返佣比例',
   `red_ratio` float(8,2) NOT NULL DEFAULT '0.00' COMMENT '红利返佣比例',
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `t_admin` (
 
 -- 正在导出表  bh_exchange.t_admin 的数据：16 rows
 /*!40000 ALTER TABLE `t_admin` DISABLE KEYS */;
-INSERT INTO `t_admin` (`id`, `username`, `password`, `realname`, `phone`, `lelevl`, `money`, `back_ratio`, `red_ratio`, `company_name`, `company_lead`, `company_phone`, `company_tel`, `company_address`, `parent_id`, `last_login_time`, `last_login_ip`, `status`, `add_time`) VALUES
+INSERT INTO `t_admin` (`id`, `username`, `password`, `realname`, `phone`, `level`, `money`, `back_ratio`, `red_ratio`, `company_name`, `company_lead`, `company_phone`, `company_tel`, `company_address`, `parent_id`, `last_login_time`, `last_login_ip`, `status`, `add_time`) VALUES
 	(1, '1', NULL, NULL, NULL, NULL, 0.00, 0.00, 0.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2018-03-20 00:00:00'),
 	(2, '2', NULL, NULL, NULL, NULL, 0.00, 0.00, 0.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2018-03-22 14:26:00'),
 	(3, '3', NULL, NULL, NULL, NULL, 0.00, 0.00, 0.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2018-03-22 14:26:01'),
