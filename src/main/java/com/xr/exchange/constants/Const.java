@@ -88,4 +88,8 @@ public interface Const {
      */
     String SIGN_ADMIN_SHOW_LEVEL = "showLevel";
 
+    /**
+     * 登录的管理员名称标示
+     */
+    String LOGIN_ADMIN_NAME = "username";
 }

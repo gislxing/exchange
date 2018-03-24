@@ -83,7 +83,7 @@
     </select>
 
     <select id="getCountAdminLogin" resultMap="baseResultMap">
-        select * FROM t_admin WHERE username = trim(#{username}) AND password = trim(#{password})
+        select * FROM t_admin WHERE username = trim(#{username}) AND password = trim(#{password}) AND status = 1
     </select>
 
     <insert id="saveAdmin" parameterType="AdminBean"

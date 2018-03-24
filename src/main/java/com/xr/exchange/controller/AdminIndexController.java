@@ -40,8 +40,14 @@ public class AdminIndexController {
      * @return
      */
     @GetMapping(value = "")
-    public String login(){
-        return "admin/login";
+    public String login(HttpSession session,Map<String, Object> map){
+        AdminBean adminBean = (AdminBean) session.getAttribute(Const.KEY_SESSION_LOGIN_ADMIN);
+        if(adminBean !=null){
+            return index(session,map);
+        }else {
+            return "admin/login";
+        }
+
     }
 
     /**
@@ -112,6 +118,13 @@ public class AdminIndexController {
     public String index(HttpSession session, Map<String, Object> map){
         AdminBean adminBean = (AdminBean) session.getAttribute(Const.KEY_SESSION_LOGIN_ADMIN);
         map.put(Const.SIGN_LOGIN_ADMIN_LEVEL, adminBean.getLevel());
+        map.put(Const.SIGN_ADMIN_SHOW_LEVEL, adminBean.getShowLevel());
+        map.put(Const.LOGIN_ADMIN_NAME, adminBean.getUsername());
         return "admin/index";
+    }
+    @GetMapping("/logout")
+    public String logout(HttpSession session, Map<String, Object> map){
+        session.setAttribute(Const.KEY_SESSION_LOGIN_ADMIN,null);
+        return login(session,map);
     }
 }
