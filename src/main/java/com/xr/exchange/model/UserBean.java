@@ -10,73 +10,65 @@ import java.util.Date;
  */
 public class UserBean {
     private Integer id;
-    private string username;
-    private string password;
-    private string avatar_path;
-    private string realname;
-    private string sex;
+    private String username;
+    private String password;
+    private String avatarPath;
+    private String realname;
+    private String sex;
     private Float money;
-    private Integer refree_id;
-    private Integer zonghe_id;
-    private Integer yunying_id;
-    private Integer jiaoyisuo_id;
-    private string int;
-    private string int;
-    private string int;
-    private Date last_login_time;
-    private string last_login_ip;
-    private Date add_time;
+    private Integer refreeId;
+    private Integer zongheId;
+    private Integer yunyingId;
+    private Integer jiaoyisuoId;
+    private int tradeable;
+    private int loginType;
+    private int chujinType;
+    private Date lastLoginTime;
+    private String lastLoginIp;
+    private Date addTime;
     private int autonym;
-    private string card_shou;
-    private string card_code;
-    private string card_zheng;
-    private string card_fan;
+    private String cardShou;
+    private String cardCode;
+    private String cardZheng;
+    private String cardFan;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public string getUsername() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(string username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public string getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(string password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public string getAvatar_path() {
-        return avatar_path;
+    public String getAvatarPath() {
+        return avatarPath;
     }
 
-    public void setAvatar_path(string avatar_path) {
-        this.avatar_path = avatar_path;
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
     }
 
-    public string getRealname() {
+    public String getRealname() {
         return realname;
     }
 
-    public void setRealname(string realname) {
+    public void setRealname(String realname) {
         this.realname = realname;
     }
 
-    public string getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(string sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 
@@ -88,60 +80,84 @@ public class UserBean {
         this.money = money;
     }
 
-    public Integer getRefree_id() {
-        return refree_id;
+    public Integer getRefreeId() {
+        return refreeId;
     }
 
-    public void setRefree_id(Integer refree_id) {
-        this.refree_id = refree_id;
+    public void setRefreeId(Integer refreeId) {
+        this.refreeId = refreeId;
     }
 
-    public Integer getZonghe_id() {
-        return zonghe_id;
+    public Integer getZongheId() {
+        return zongheId;
     }
 
-    public void setZonghe_id(Integer zonghe_id) {
-        this.zonghe_id = zonghe_id;
+    public void setZongheId(Integer zongheId) {
+        this.zongheId = zongheId;
     }
 
-    public Integer getYunying_id() {
-        return yunying_id;
+    public Integer getYunyingId() {
+        return yunyingId;
     }
 
-    public void setYunying_id(Integer yunying_id) {
-        this.yunying_id = yunying_id;
+    public void setYunyingId(Integer yunyingId) {
+        this.yunyingId = yunyingId;
     }
 
-    public Integer getJiaoyisuo_id() {
-        return jiaoyisuo_id;
+    public Integer getJiaoyisuoId() {
+        return jiaoyisuoId;
     }
 
-    public void setJiaoyisuo_id(Integer jiaoyisuo_id) {
-        this.jiaoyisuo_id = jiaoyisuo_id;
+    public void setJiaoyisuoId(Integer jiaoyisuoId) {
+        this.jiaoyisuoId = jiaoyisuoId;
     }
 
-    public Date getLast_login_time() {
-        return last_login_time;
+    public int getTradeable() {
+        return tradeable;
     }
 
-    public void setLast_login_time(Date last_login_time) {
-        this.last_login_time = last_login_time;
+    public void setTradeable(int tradeable) {
+        this.tradeable = tradeable;
     }
 
-    public string getLast_login_ip() {
-        return last_login_ip;
+    public int getLoginType() {
+        return loginType;
     }
 
-    public void setLast_login_ip(string last_login_ip) {
-        this.last_login_ip = last_login_ip;
+    public void setLoginType(int loginType) {
+        this.loginType = loginType;
     }
 
-    public Date getAdd_time() {
-        return add_time;
+    public int getChujinType() {
+        return chujinType;
     }
 
-    public void setAdd_time(Date add_time) {
-        this.add_time = add_time;
+    public void setChujinType(int chujinType) {
+        this.chujinType = chujinType;
+    }
+
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
+    public String getLastLoginIp() {
+        return lastLoginIp;
+    }
+
+    public void setLastLoginIp(String lastLoginIp) {
+        this.lastLoginIp = lastLoginIp;
+    }
+
+    public Date getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
     }
 
     public int getAutonym() {
@@ -152,35 +168,44 @@ public class UserBean {
         this.autonym = autonym;
     }
 
-    public string getCard_shou() {
-        return card_shou;
+    public String getCardShou() {
+        return cardShou;
     }
 
-    public void setCard_shou(string card_shou) {
-        this.card_shou = card_shou;
+    public void setCardShou(String cardShou) {
+        this.cardShou = cardShou;
     }
 
-    public string getCard_code() {
-        return card_code;
+    public String getCardCode() {
+        return cardCode;
     }
 
-    public void setCard_code(string card_code) {
-        this.card_code = card_code;
+    public void setCardCode(String cardCode) {
+        this.cardCode = cardCode;
     }
 
-    public string getCard_zheng() {
-        return card_zheng;
+    public String getCardZheng() {
+        return cardZheng;
     }
 
-    public void setCard_zheng(string card_zheng) {
-        this.card_zheng = card_zheng;
+    public void setCardZheng(String cardZheng) {
+        this.cardZheng = cardZheng;
     }
 
-    public string getCard_fan() {
-        return card_fan;
+    public String getCardFan() {
+        return cardFan;
     }
 
-    public void setCard_fan(string card_fan) {
-        this.card_fan = card_fan;
+    public void setCardFan(String cardFan) {
+        this.cardFan = cardFan;
+    }
+
+    public Integer getId() {
+
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
