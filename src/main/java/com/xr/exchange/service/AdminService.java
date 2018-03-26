@@ -23,7 +23,7 @@ public interface AdminService {
      * 保存
      * @param adminBean
      */
-    void saveAdmin(AdminBean adminBean);
+    void saveAdmin(AdminBean adminBean,AdminBean loginAdmin) throws Exception;
     /**
      * 验证用户名重复
      * @param adminBean

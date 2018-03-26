@@ -55,11 +55,13 @@ public class AdminServiceImpl implements AdminService {
      * @param adminBean
      */
     @Override
-    public void saveAdmin(AdminBean adminBean) {
+    public void saveAdmin(AdminBean adminBean,AdminBean loginAdmin) throws Exception {
         adminBean.setStatus(1);
         adminBean.setAddTime(new Date());
         adminBean.setMoney(0.00);
         adminDao.saveAdmin(adminBean);
+
+        adminDao.upateKeyId(loginAdmin,adminBean.getId());
     }
 
     /**

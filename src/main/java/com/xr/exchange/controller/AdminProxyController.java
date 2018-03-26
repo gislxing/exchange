@@ -96,9 +96,12 @@ public class AdminProxyController {
             } else {
                 AdminBean loginAdmin = (AdminBean) session.getAttribute(Const.KEY_SESSION_LOGIN_ADMIN);
                 setCreateAdminLevel(adminBean, loginAdmin);
-                adminBean.setParentId(loginAdmin.getId());
+                adminBean.setJiaoyisuoId(loginAdmin.getJiaoyisuoId());
+                adminBean.setYunyingId(loginAdmin.getYunyingId());
+                adminBean.setZongheId(loginAdmin.getZongheId());
+                adminBean.setWeiquanId(loginAdmin.getWeiquanId());
                 adminBean.setPassword(DigestUtils.md5Hex(adminBean.getPassword()));
-                adminService.saveAdmin(adminBean);
+                adminService.saveAdmin(adminBean,loginAdmin);
                 flag = Const.SUCCESS_FLAG;
                 msg = "添加管理员成功";
             }
