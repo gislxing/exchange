@@ -27,8 +27,35 @@
         <id column="card_fan" property="cardFan" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getUsers">
+    <sql id="base_column_list">
+        t.id,
+        t.username,
+        t.password,
+        t.avatarPath,
+        t.realname,
+        t.sex,
+        t.money,
+        t.refreeId,
+        t.zongheId,
+        t.yunyingId,
+        t.jiaoyisuoId,
+        t.tradeable,
+        t.loginType,
+        t.chujinType,
+        t.lastLoginTime,
+        t.lastLoginIp,
+        t.addTime,
+        t.autonym,
+        t.cardShou,
+        t.cardCode,
+        t.cardZheng,
+        t.cardFan
+    </sql>
 
+    <select id="getUsers">
+      SELECT
+      <include refid="baseResultMap"></include>
+      from
     </select>
 
 </mapper>
