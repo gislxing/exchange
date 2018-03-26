@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<<#include "/admin/include/head-include.ftl" >
+<#include "/admin/include/head-include.ftl" >
 <title>后台登录</title>
 <meta name="keywords" content="">
 <meta name="description" content="">
