@@ -17,7 +17,10 @@
         <id column="company_phone" property="companyPhone" jdbcType="VARCHAR"/>
         <id column="company_tel" property="companyTel" jdbcType="VARCHAR"/>
         <id column="company_address" property="companyAddress" jdbcType="VARCHAR"/>
-        <id column="parent_id" property="parentId" jdbcType="VARCHAR"/>
+        <id column="jiaoyisuo_id" property="jiaoyisuoId" jdbcType="INTEGER"/>
+        <id column="yunying_id" property="yunyingId" jdbcType="INTEGER"/>
+        <id column="zonghe_id" property="zongheId" jdbcType="INTEGER"/>
+        <id column="weiquan_id" property="weiquanId" jdbcType="INTEGER"/>
         <id column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
         <id column="last_login_ip" property="lastLoginIp" jdbcType="VARCHAR"/>
         <id column="status" property="status" jdbcType="VARCHAR"/>
@@ -39,7 +42,10 @@
         t.company_phone,
         t.company_tel,
         t.company_address,
-        t.parent_id,
+        t.jiaoyisuo_id,
+        t.yunying_id,
+        t.zonghe_id,
+        t.weiquan_id,
         t.last_login_time,
         t.last_login_ip,
         t.status,
@@ -50,19 +56,18 @@
         select
         <include refid="base_column_list"/>
         from t_admin t
-        <if test="showLevel != null and showLevel != '' and (showLevel - loginAdmin.level) == 1">
-            inner join t_admin ad on t.parent_id = ad.id
-        </if>
-        <if test="showLevel != null and showLevel != '' and (showLevel - loginAdmin.level) == 2">
-            inner join t_admin a on t.parent_id = a.id
-            inner join t_admin ad on a.parent_id = ad.id
-        </if>
-        <if test="showLevel != null and showLevel != '' and (showLevel - loginAdmin.level) == 3">
-            inner join t_admin a on t.parent_id = a.id
-            inner join t_admin b on a.parent_id = b.id
-            inner join t_admin ad on b.parent_id = ad.id
-        </if>
         where 1 = 1
+        <if test="showLevel != null and showLevel != ''">
+            <if test="(showLevel==2 or showLevel==3 or showLevel==4) and loginAdmin.level == 1">
+                AND t.jiaoyisuo_id = #{loginAdmin.id} AND t.level = #{showLevel}
+            </if>
+            <if test="(showLevel==3 or showLevel==4) and loginAdmin.level == 2">
+                AND t.yunying_id = #{loginAdmin.id} AND t.level = #{showLevel}
+            </if>
+            <if test="(showLevel==4) and loginAdmin.level == 3">
+                AND t.zonghe_id = #{loginAdmin.id} AND t.level = #{showLevel}
+            </if>
+        </if>
         <if test="adminListBean.conditions!=null and adminListBean.conditions!=''">
             and (t.username LIKE '%' #{adminListBean.conditions} '%' or t.realname LIKE '%' #{adminListBean.conditions}
             '%' or t.phone LIKE '%'
@@ -73,9 +78,6 @@
         </if>
         <if test="adminListBean.addEndTime!=null and adminListBean.addEndTime!=''">
             AND t.add_time &lt;= CONCAT(#{adminListBean.addEndTime},' 23:59:59')
-        </if>
-        <if test="loginAdmin.id != null and loginAdmin.id != ''">
-            AND ad.id = #{loginAdmin.id}
         </if>
     </select>
 
@@ -89,16 +91,25 @@
         select * FROM t_admin WHERE username = trim(#{username}) AND password = trim(#{password}) AND status = 1
     </select>
 
-    <insert id="saveAdmin" parameterType="AdminBean"
-            useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO `t_admin` ( `username`, `password`, `realname`, `phone`, `level`, `money`, `back_ratio`, `red_ratio`, `company_name`, `company_lead`, `company_phone`, `company_tel`, `company_address`, `parent_id`, `last_login_time`, `last_login_ip`, `status`, `add_time`) VALUES
-	( TRIM(#{username}), #{password}, TRIM(#{realname}), TRIM(#{phone}), #{level}, #{money},TRIM(#{backRatio}), TRIM(#{redRatio}), #{companyName}, #{companyLead}, #{companyPhone}, #{companyTel}, #{companyAddress}, #{parentId}, #{lastLoginTime}, #{lastLoginIp}, #{status}, #{addTime})
+    <insert id="saveAdmin" parameterType="AdminBean" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `t_admin` ( `username`, `password`, `realname`, `phone`, `level`, `money`, `back_ratio`, `red_ratio`, `company_name`, `company_lead`, `company_phone`, `company_tel`, `company_address`, `jiaoyisuo_id`,`yunying_id`,`zonghe_id`,`weiquan_id`, `last_login_time`, `last_login_ip`, `status`, `add_time`) VALUES
+	( TRIM(#{username}), #{password}, TRIM(#{realname}), TRIM(#{phone}), #{level}, #{money},TRIM(#{backRatio}), TRIM(#{redRatio}), #{companyName}, #{companyLead}, #{companyPhone}, #{companyTel}, #{companyAddress}, #{jiaoyisuoId},#{yunyingId},#{zongheId},#{weiquanId}, #{lastLoginTime}, #{lastLoginIp}, #{status}, #{addTime})
     </insert>
 
     <update id="upateStatus" parameterType="string">
         UPDATE t_admin set status = #{status} where username = #{username}
     </update>
-
+    <update id="upateKeyId">
+        <if test="adminBean.level!=null and adminBean.level==1">
+        UPDATE t_admin set yunying_id = #{id} where id = #{id}
+        </if>
+        <if test="adminBean.level!=null and adminBean.level==2">
+            UPDATE t_admin set zonghe_id = #{id} where id = #{id}
+        </if>
+        <if test="adminBean.level!=null and adminBean.level==3">
+            UPDATE t_admin set weiquan_id = #{id} where id = #{id}
+        </if>
+    </update>
     <delete id="delete" parameterType="string">
         DELETE FROM t_admin WHERE username = #{username}
     </delete>

@@ -16,13 +16,15 @@ public interface AdminDao {
 
     List<AdminBean> getAllAdmin(@Param("adminListBean") AdminListBean adminListBean, @Param("showLevel") Integer showLevel, @Param("loginAdmin") AdminBean loginAdmin);
 
-    void saveAdmin(AdminBean adminBean);
+    Integer saveAdmin(AdminBean adminBean);
 
     int getCountAdmin(AdminBean adminBean);
 
     AdminBean getCountAdminLogin(AdminBean adminBean);
 
     void upateStatus(@Param("username") String username, @Param("status") String status);
+
+    void upateKeyId(@Param("adminBean") AdminBean adminBean,@Param("id") Integer id);
 
     void delete(@Param("username") String username);
 

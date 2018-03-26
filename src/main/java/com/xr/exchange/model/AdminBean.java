@@ -25,7 +25,11 @@ public class AdminBean {
     String companyPhone;
     String companyTel;
     String companyAddress;
-    Integer parentId;
+    Integer jiaoyisuoId;
+    Integer yunyingId;
+    Integer zongheId;
+    Integer weiquanId;
+
     Date lastLoginTime;
     String lastLoginIp;
     Integer status;
@@ -154,12 +158,48 @@ public class AdminBean {
         this.companyAddress = companyAddress;
     }
 
-    public Integer getParentId() {
-        return parentId;
+    public String[] getAdminLevel() {
+        return adminLevel;
     }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
+    public void setAdminLevel(String[] adminLevel) {
+        this.adminLevel = adminLevel;
+    }
+
+    public Integer getJiaoyisuoId() {
+        return jiaoyisuoId;
+    }
+
+    public void setJiaoyisuoId(Integer jiaoyisuoId) {
+        this.jiaoyisuoId = jiaoyisuoId;
+    }
+
+    public Integer getYunyingId() {
+        return yunyingId;
+    }
+
+    public void setYunyingId(Integer yunyingId) {
+        this.yunyingId = yunyingId;
+    }
+
+    public Integer getZongheId() {
+        return zongheId;
+    }
+
+    public void setZongheId(Integer zongheId) {
+        this.zongheId = zongheId;
+    }
+
+    public Integer getWeiquanId() {
+        return weiquanId;
+    }
+
+    public void setWeiquanId(Integer weiquanId) {
+        this.weiquanId = weiquanId;
+    }
+
+    public void setShowLevel(String showLevel) {
+        this.showLevel = showLevel;
     }
 
     public Date getLastLoginTime() {
