@@ -17,21 +17,19 @@
                                                            href="javascript:location.replace(location.href);"
                                                            title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-    <form action="">
+    <form searchCond="true" action="/admin/user/list" method="get">
         <div class="text-c"> 注册时间：
-            <input placeholder ="开始时间" type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin"
-                   class="input-text Wdate" name="start" value="<?=$start?>" style="width:120px;">
+            <input type="text" value="${searchData.addStartTime?string(searchData.addStartTime, "")}"
+                   onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin"
+                   name="addStartTime" class="input-text Wdate" style="width:120px;">
             -
-            <input placeholder = "结束时间" type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })"
-                   id="datemax"
-                   class="input-text Wdate" name="end" value="<?=$end?>" style="width:120px;">
-            用户名：
-            <input type="text" class="input-text" style="width:150px" placeholder="输入登录名" id="" value="<?=$username?>" name="username">
-            姓名：
-            <input type="text" class="input-text" style="width:150px" placeholder="输入姓名" id="" value="<?=$realname?>" name="realname">
-            所属代理：
-            <input type="text" class="input-text" style="width:150px" placeholder="" id="" value="<?=$dlusername?>" name="dlusername">
-            <button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户
+            <input type="text" value="${searchData.addEndTime?string(searchData.addEndTime, "")}"
+                   onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax"
+                   name="addEndTime" class="input-text Wdate" style="width:120px;">
+            <input type="text" value="${searchData.conditions?string(searchData.conditions, "")}" class="input-text" style="width:250px"
+                   placeholder="登录名/姓名/所属代理" id="conditions" name="conditions">
+            <button type="submit" class="btn btn-success" id="subForm" name="subForm"><i
+                    class="Hui-iconfont">&#xe665;</i> 搜用户
             </button>
         </div>
     </form>
