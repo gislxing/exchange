@@ -26,6 +26,44 @@
         <id column="card_zheng" property="cardZheng" jdbcType="VARCHAR"/>
         <id column="card_fan" property="cardFan" jdbcType="VARCHAR"/>
     </resultMap>
+    <!--客户入金列表-->
+    <resultMap id="payResultMap" type="com.xr.exchange.model.UserPayVo">
+        <id column="username" property="username" jdbcType="VARCHAR"/>
+        <id column="realname" property="realname" jdbcType="VARCHAR"/>
+        <id column="payType" property="payType" jdbcType="INTEGER"/>
+        <id column="payMoney" property="payMoney" jdbcType="DECIMAL"/>
+        <id column="payFlag" property="payFlag" jdbcType="INTEGER"/>
+        <id column="payTime" property="payTime" jdbcType="TIMESTAMP"/>
+        <id column="payNo" property="payNo" jdbcType="VARCHAR"/>
+        <id column="outTradeNo" property="outTradeNo" jdbcType="VARCHAR"/>
+        <id column="zongheName" property="zongheName" jdbcType="VARCHAR"/>
+        <id column="weiquanName" property="weiquanName" jdbcType="VARCHAR"/>
+        <id column="yunyingName" property="yunyingName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="base_column_list">
+        t.id,
+        t.username,
+        t.password,
+        t.avatarPath,
+        t.realname,
+        t.sex,
+        t.money,
+        t.refreeId,
+        t.zongheId,
+        t.yunyingId,
+        t.jiaoyisuoId,
+        t.tradeable,
+        t.loginType,
+        t.chujinType,
+        t.lastLoginTime,
+        t.lastLoginIp,
+        t.addTime,
+        t.autonym,
+        t.cardShou,
+        t.cardCode,
+        t.cardZheng,
+        t.cardFan
+    </sql>
 
     <resultMap id="userListResultMap" type="com.xr.exchange.model.UserListBean">
         <id column="id" property="id" jdbcType="INTEGER"/>
@@ -130,6 +168,44 @@
         </if>
     </select>
 
+    <select id="getUserPayList" resultMap="payResultMap">
+        select a.money as payMoney,a.pay_flag as payFlag,a.pay_time as payTime,a.pay_no as payNo,a.pay_type as payType,a.out_trade_no as outTradeNo,b.username,b.realname,
+        c.username as yunyingName,d.username as zongheName,e.username as weiquanName
+        from t_user_pay_info a
+        left join t_user b on a.user_id = b.id
+        left join t_admin c on c.id = b.yunying_id
+        left join t_admin d on d.id = b.zonghe_id
+        left join t_admin e on e.id = b.refree_id
+        WHERE 1=1
+        <if test="userPayListBean.conditions!=null and userPayListBean.conditions!=''">
+            and (b.username LIKE '%' #{userPayListBean.conditions} '%' or b.realname LIKE '%' #{userPayListBean.conditions}
+            '%')
+        </if>
+        <if test="userPayListBean.addStartTime!=null and userPayListBean.addStartTime!=''">
+            AND a.pay_time &gt;= CONCAT(#{userPayListBean.addStartTime},' 00:00:00')
+        </if>
+        <if test="userPayListBean.addEndTime!=null and userPayListBean.addEndTime!=''">
+            AND a.pay_time &lt;= CONCAT(#{userPayListBean.addEndTime},' 23:59:59')
+        </if>
+        <if test="userPayListBean.payFlag!=null and userPayListBean.payFlag!=''">
+            AND a.pay_flag =(#{userPayListBean.payFlag}
+        </if>
+        <if test="userPayListBean.payType!=null and userPayListBean.payType!=''">
+            AND a.pay_type =(#{userPayListBean.payType}
+        </if>
+        <if test="loginAdmin.level==1">
+            AND b.jiaoyisuo_id = #{loginAdmin.id}
+        </if>
+        <if test="loginAdmin.level==2">
+            AND b.yunying_id = #{loginAdmin.id}
+        </if>
+        <if test="loginAdmin.level==3">
+            AND b.zonghe_id = #{loginAdmin.id}
+        </if>
+        <if test="loginAdmin.level==4">
+            AND b.weiquan_id = #{loginAdmin.id}
+        </if>
+    </select>
     <update id="updateUser">
         UPDATE t_user
         <if test="userListBean.tradeable != null and userListBean.tradeable != ''">

@@ -67,8 +67,8 @@
             <dt><i class="Hui-iconfont">&#xe63a;</i> 资金管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a data-href="/wel" data-title="客户出金明细" href="javascript:void(0)">客户出金明细</a></li>
-                    <li><a data-href="/wel" data-title="客户入金明细" href="javascript:void(0)">客户入金明细</a></li>
+                    <li><a data-href="" data-title="客户出金明细" href="javascript:void(0)">客户出金明细</a></li>
+                    <li><a data-href="/admin/user/userPayList" data-title="客户入金明细" href="javascript:void(0)">客户入金明细</a></li>
                     <li><a data-href="/wel" data-title="代理出金审核" href="javascript:void(0)">代理出金审核</a></li>
                     <li><a data-href="/wel" data-title="代理入金记录" href="javascript:void(0)">代理入金记录</a></li>
                     <li><a data-href="/wel" data-title="我的返现明细" href="javascript:void(0)">我的返现明细</a></li>
