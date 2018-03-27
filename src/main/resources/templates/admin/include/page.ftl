@@ -92,7 +92,7 @@
 
         function toNewPage(dom, pageNum){
             if (!pageNum){
-                var pageNum = $(dom).text();
+                pageNum = $(dom).text();
             }
             var pageSize = $("select[pageSize='true']").val();
             var form = $("form[searchCond='true']");

@@ -1,5 +1,13 @@
 package com.xr.exchange.dao;
 
+import com.xr.exchange.bean.AdminListBean;
+import com.xr.exchange.model.AdminBean;
+import com.xr.exchange.model.UserBean;
+import com.xr.exchange.model.UserListBean;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
 /**
  * 管理员-用户管理dao
  *
@@ -8,5 +16,7 @@ package com.xr.exchange.dao;
  */
 public interface AdminUserManageDao {
 
+    List<UserBean> getUsers(@Param("adminListBean") AdminListBean adminListBean, @Param("loginAdmin") AdminBean loginAdmin);
 
+    Integer updateUser(@Param("userListBean") UserListBean userListBean);
 }

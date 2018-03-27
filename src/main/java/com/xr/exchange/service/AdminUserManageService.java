@@ -1,5 +1,11 @@
 package com.xr.exchange.service;
 
+import com.xr.exchange.bean.AdminListBean;
+import com.xr.exchange.model.AdminBean;
+import com.xr.exchange.model.UserListBean;
+
+import java.util.Map;
+
 /**
  * 管理员-用户service
  *
@@ -7,4 +13,8 @@ package com.xr.exchange.service;
  * @create 2018/3/26.
  */
 public interface AdminUserManageService {
+
+    Map<String,Object> getUsers(AdminListBean adminListBean, AdminBean loginAdmin);
+
+    Integer updateUser(UserListBean userListBean);
 }

@@ -27,35 +27,124 @@
         <id column="card_fan" property="cardFan" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap id="userListResultMap" type="com.xr.exchange.model.UserListBean">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <id column="username" property="username" jdbcType="VARCHAR"/>
+        <id column="realname" property="realname" jdbcType="VARCHAR"/>
+        <id column="money" property="money" jdbcType="VARCHAR"/>
+        <id column="refree_id" property="refreeId" jdbcType="INTEGER"/>
+        <id column="zonghe_id" property="zongheId" jdbcType="INTEGER"/>
+        <id column="yunying_id" property="yunyingId" jdbcType="INTEGER"/>
+        <id column="jiaoyisuo_id" property="jiaoyisuoId" jdbcType="INTEGER"/>
+        <id column="tradeable" property="tradeable" jdbcType="INTEGER"/>
+        <id column="login_type" property="loginType" jdbcType="INTEGER"/>
+        <id column="chujin_type" property="chujinType" jdbcType="INTEGER"/>
+        <id column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+        <id column="last_login_ip" property="lastLoginIp" jdbcType="VARCHAR"/>
+        <id column="add_time" property="addTime" jdbcType="TIMESTAMP"/>
+        <id column="card_shou" property="cardShou" jdbcType="VARCHAR"/>
+        <id column="card_code" property="cardCode" jdbcType="VARCHAR"/>
+        <id column="card_zheng" property="cardZheng" jdbcType="VARCHAR"/>
+        <id column="card_fan" property="cardFan" jdbcType="VARCHAR"/>
+        <id column="comp_member_name" property="compMemberName" jdbcType="VARCHAR"/>
+        <id column="micro_proxy_name" property="microProxyName" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <sql id="base_column_list">
         t.id,
         t.username,
         t.password,
-        t.avatarPath,
+        t.avatar_path,
         t.realname,
         t.sex,
         t.money,
-        t.refreeId,
-        t.zongheId,
-        t.yunyingId,
-        t.jiaoyisuoId,
+        t.refree_id,
+        t.zonghe_id,
+        t.yunying_id,
+        t.jiaoyisuo_id,
         t.tradeable,
-        t.loginType,
-        t.chujinType,
-        t.lastLoginTime,
-        t.lastLoginIp,
-        t.addTime,
+        t.login_type,
+        t.chujin_type,
+        t.last_login_time,
+        t.last_login_ip,
+        t.add_time,
         t.autonym,
-        t.cardShou,
-        t.cardCode,
-        t.cardZheng,
-        t.cardFan
+        t.card_shou,
+        t.card_code,
+        t.card_zheng,
+        t.card_fan
     </sql>
 
-    <select id="getUsers">
-      SELECT
-      <include refid="baseResultMap"></include>
-      from
+    <sql id="user_list">
+        t.id,
+        t.username,
+        t.realname,
+        t.money,
+        t.refree_id,
+        t.zonghe_id,
+        t.yunying_id,
+        t.jiaoyisuo_id,
+        t.tradeable,
+        t.login_type,
+        t.chujin_type,
+        t.last_login_time,
+        t.last_login_ip,
+        t.add_time,
+        t.card_shou,
+        t.card_code,
+        t.card_zheng,
+        t.card_fan
+    </sql>
+
+    <select id="getUsers" resultMap="userListResultMap">
+        SELECT * FROM (
+        SELECT
+        <include refid="user_list"/>
+        ,tr.username as micro_proxy_name, tz.username as comp_member_name
+        from t_user t
+        left join t_admin tr on t.refree_id = tr.id
+        left join t_admin tz on t.zonghe_id = tz.id
+        ) tt
+        WHERE 1 = 1
+        <if test="loginAdmin.level == 1">
+            AND tt.jiaoyisuo_id = ${loginAdmin.id}
+        </if>
+        <if test="loginAdmin.level == 2">
+            AND tt.yunying_id = ${loginAdmin.id}
+        </if>
+        <if test="loginAdmin.level == 3">
+            AND tt.zonghe_id = ${loginAdmin.id}
+        </if>
+        <if test="loginAdmin.level == 4">
+            AND tt.refree_id = ${loginAdmin.id}
+        </if>
+        <if test="adminListBean.conditions != null and adminListBean.conditions != ''">
+            AND (tt.username LIKE '%' #{adminListBean.conditions} '%' or tt.realname LIKE '%' #{adminListBean.conditions}
+            '%' or tt.micro_proxy_name LIKE '%' #{adminListBean.conditions} '%')
+        </if>
+        <if test="adminListBean.addStartTime!=null and adminListBean.addStartTime!=''">
+            AND tt.add_time &gt;= CONCAT(#{adminListBean.addStartTime},' 00:00:00')
+        </if>
+        <if test="adminListBean.addEndTime!=null and adminListBean.addEndTime!=''">
+            AND tt.add_time &lt;= CONCAT(#{adminListBean.addEndTime},' 23:59:59')
+        </if>
     </select>
+
+    <update id="updateUser">
+        UPDATE t_user
+        <if test="userListBean.tradeable != null and userListBean.tradeable != ''">
+          SET tradeable = #{userListBean.tradeable}
+        </if>
+        <if test="userListBean.loginType != null and userListBean.loginType != ''">
+            SET tradeable = #{userListBean.loginType}
+        </if>
+        <if test="userListBean.chujinType != null and userListBean.chujinType != ''">
+            SET tradeable = #{userListBean.chujinType}
+        </if>
+        WHERE 1 = 1
+        <if test="userListBean.id != null and userListBean.id != ''">
+            id = #{userListBean.id}
+        </if>
+    </update>
 
 </mapper>

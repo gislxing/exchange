@@ -1,3 +1,7 @@
+/**
+ * 重置密码
+ * @param userId
+ */
 function resetPassword(userId) {
     layer.confirm('确认要重置密码？', function () {
         $.ajax({
@@ -9,7 +13,7 @@ function resetPassword(userId) {
                 if (data.stauts == 1) {
                     layer.msg('操作成功!', {icon: 1, time: 1000});
                 } else {
-                    layer.msg(data.msg,{icon:2,time:1000});
+                    layer.msg(data.msg, {icon: 2, time: 1000});
                 }
             },
             error: function (XmlHttpRequest, textStatus, errorThrown) {
@@ -18,30 +22,31 @@ function resetPassword(userId) {
         });
     });
 }
+
 /**
- * 暂停交易
+ * 更新交易状态
  * @param goldId
  */
-function zantingjiaoyi(userId,tradeable) {
+function updateTransactionStatus(userId, status) {
     var msg;
-    if(tradeable == 0){
-        msg= "确认要暂停该用户交易？"
-    }else {
-        msg= "确认要恢复该用户交易？"
+    if (status == 0) {
+        msg = "确认要暂停该用户交易？"
+    } else {
+        msg = "确认要恢复该用户交易？"
     }
+
     layer.confirm(msg, function () {
         $.ajax({
             type: 'POST',
-            url: '<?=U("user/zantingjiaoyi")?>',
-            data: {userId:userId,tradeable:tradeable},
+            url: '/admin/user/update',
+            data: {userId: userId, transactionStatus: status},
             dataType: 'json',
             success: function (data) {
-
                 if (data.status == 1) {
                     layer.msg('操作成功!', {icon: 1, time: 1000});
                     window.location.reload();
                 } else {
-                    layer.msg(data.msg,{icon:2,time:10000});
+                    layer.msg(data.msg, {icon: 2, time: 10000});
                 }
             },
             error: function (XmlHttpRequest, textStatus, errorThrown) {
@@ -50,22 +55,23 @@ function zantingjiaoyi(userId,tradeable) {
         });
     });
 }
+
 /**
  * 禁止登录
  * @param goldId
  */
-function jinzhidenglu(userId,loginType) {
+function jinzhidenglu(userId, loginType) {
     var msg;
-    if(loginType == 2){
-        msg= "确认要禁止该用户登录？"
-    }else {
-        msg= "确认要恢复该用户登录？"
+    if (loginType == 2) {
+        msg = "确认要禁止该用户登录？"
+    } else {
+        msg = "确认要恢复该用户登录？"
     }
     layer.confirm(msg, function () {
         $.ajax({
             type: 'POST',
             url: '<?=U("user/jinzhidenglu")?>',
-            data: {userId:userId,loginType:loginType},
+            data: {userId: userId, loginType: loginType},
             dataType: 'json',
             success: function (data) {
 
@@ -73,7 +79,7 @@ function jinzhidenglu(userId,loginType) {
                     layer.msg('操作成功!', {icon: 1, time: 1000});
                     window.location.reload();
                 } else {
-                    layer.msg(data.msg,{icon:2,time:10000});
+                    layer.msg(data.msg, {icon: 2, time: 10000});
                 }
             },
             error: function (XmlHttpRequest, textStatus, errorThrown) {
@@ -82,25 +88,26 @@ function jinzhidenglu(userId,loginType) {
         });
     });
 }
-function risk(userID,risk) {
+
+function risk(userID, risk) {
     var msg;
-    if(risk == 1){
-        msg= "确认要恢复该用户？"
-    }else {
-        msg= "确认要设置该用户？"
+    if (risk == 1) {
+        msg = "确认要恢复该用户？"
+    } else {
+        msg = "确认要设置该用户？"
     }
     layer.confirm(msg, function () {
         $.ajax({
             type: 'POST',
             url: '<?=U("user/risk")?>',
-            data: {userId:userID,risk:risk},
+            data: {userId: userID, risk: risk},
             dataType: 'json',
             success: function (data) {
                 if (data.status == 1) {
                     layer.msg('操作成功!', {icon: 1, time: 1000});
                     window.location.reload();
                 } else {
-                    layer.msg(data.msg,{icon:2,time:10000});
+                    layer.msg(data.msg, {icon: 2, time: 10000});
                 }
             },
             error: function (XmlHttpRequest, textStatus, errorThrown) {
@@ -109,22 +116,23 @@ function risk(userID,risk) {
         });
     });
 }
+
 /**
  * 禁止出金
  * @param goldId
  */
-function jinzhichujin(userId,chujinType) {
+function jinzhichujin(userId, chujinType) {
     var msg;
-    if(chujinType == 2){
-        msg= "确认要禁止该用户出金？"
-    }else {
-        msg= "确认要恢复该用户出金？"
+    if (chujinType == 2) {
+        msg = "确认要禁止该用户出金？"
+    } else {
+        msg = "确认要恢复该用户出金？"
     }
     layer.confirm(msg, function () {
         $.ajax({
             type: 'POST',
             url: '<?=U("user/jinzhichujin")?>',
-            data: {userId:userId,chujinType:chujinType},
+            data: {userId: userId, chujinType: chujinType},
             dataType: 'json',
             success: function (data) {
 
@@ -132,7 +140,7 @@ function jinzhichujin(userId,chujinType) {
                     layer.msg('操作成功!', {icon: 1, time: 1000});
                     window.location.reload();
                 } else {
-                    layer.msg(data.msg,{icon:2,time:10000});
+                    layer.msg(data.msg, {icon: 2, time: 10000});
                 }
             },
             error: function (XmlHttpRequest, textStatus, errorThrown) {
@@ -142,6 +150,6 @@ function jinzhichujin(userId,chujinType) {
     });
 }
 
-function autonym(title,url,w,h) {
+function autonym(title, url, w, h) {
     layer_show(title, url, w, h);
 }
