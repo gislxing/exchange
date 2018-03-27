@@ -1,9 +1,11 @@
 package com.xr.exchange.controller;
 
 import com.xr.exchange.bean.AdminListBean;
-import com.xr.exchange.model.UserBean;
+import com.xr.exchange.bean.UserPayListBean;
 import com.xr.exchange.constants.Const;
 import com.xr.exchange.model.AdminBean;
+import com.xr.exchange.service.AdminUserManageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,8 @@ import java.util.Map;
 @RequestMapping("/admin/user")
 public class AdminUserManageController {
 
+    @Autowired
+    private AdminUserManageService adminUserManageService;
     @GetMapping("/list")
     public String user(Map<String, Object> map, AdminListBean adminListBean, HttpSession session) {
         AdminBean loginAdmin = (AdminBean) session.getAttribute(Const.KEY_SESSION_LOGIN_ADMIN);
@@ -36,17 +40,13 @@ public class AdminUserManageController {
      * @param map
      * @return
      */
-    @GetMapping("/userPopList")
-    public String adminList(UserBean userBean, HttpSession session, Map<String, Object> map) {
-        //AdminBean loginAdmin = (AdminBean) session.getAttribute(Const.KEY_SESSION_LOGIN_ADMIN);
-/*
-        Map<String, Object> dataMap = adminService.getAllAdmin(adminListBean, showLevel, loginAdmin);
+    @GetMapping("/userPayList")
+    public String adminList(UserPayListBean userPayListBean, HttpSession session, Map<String, Object> map) {
+        AdminBean loginAdmin = (AdminBean) session.getAttribute(Const.KEY_SESSION_LOGIN_ADMIN);
+        Map<String, Object> dataMap = adminUserManageService.getUserPayList(userPayListBean,loginAdmin);
         map.put(Const.STR_DATA, dataMap.get(Const.STR_DATA));
         map.put(Const.STR_PAGE_INFO, dataMap.get(Const.STR_PAGE_INFO));
-        map.put(Const.SIGN_ADMIN_SHOW_LEVEL, showLevel);
-        map.put(Const.STR_SEARCH_CONDITIONS, adminListBean);
-        map.put(Const.SIGN_ADMIN_LEVEL, loginAdmin.getLevel());*/
-
-        return "admin/userPopList";
+        map.put(Const.STR_SEARCH_CONDITIONS, userPayListBean);
+        return "admin/userPayList";
     }
 }

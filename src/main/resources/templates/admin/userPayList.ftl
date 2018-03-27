@@ -20,39 +20,37 @@
 </head>
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 资金管理 <span
-            class="c-gray en">&gt;</span>客户出金明细 <a class="btn btn-success radius r refres"
+            class="c-gray en">&gt;</span>客户人金明细 <a class="btn btn-success radius r refres"
                                                            style="line-height:1.6em;margin-top:3px"
                                                            href="javascript:location.replace(location.href);"
                                                            title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-    <form action="">
+    <form id="adminListBean1" searchCond="true" name="adminListBean1" action="/admin/user/userPayList" method="get">
         <div class="text-c">
             入金时间：
-            <input placeholder="开始时间" type="text"
+            <input type="text" value="${searchData.addStartTime!}"
                    onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin"
-                   class="input-text Wdate" name="start" value="" style="width:120px;">
+                   name="addStartTime" class="input-text Wdate" style="width:120px;">
             -
-            <input placeholder="结束时间" type="text"
-                   onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })"
-                   id="datemax"
-                   class="input-text Wdate" name="end" value="" style="width:120px;">
-
-            <input type="text" class="input-text" style="width:150px" placeholder="入金人手机号" id=""
-                   value=""
-                   name="username">
-            <input type="text" class="input-text" style="width:150px" placeholder="入金人姓名" id="" value=""
-                   name="realname">
-            <input type="text" class="input-text" style="width:150px" placeholder="上级人员用户名" id=""
-                   value=""
-                   name="jname">
+            <input type="text" value="${searchData.addEndTime!}"
+                   onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax"
+                   name="addEndTime" class="input-text Wdate" style="width:120px;">
+            <input type="text" value="${searchData.conditions!}" class="input-text" style="width:250px"
+                   placeholder="登录名/姓名/手机号" id="conditions" name="conditions">
             <span class="select-box inline">
-            <select name="flag" class="select">
-
+            <select name="flag" class="select" id="payFlag" name="payFlag">
+                <option value="0" <#if searchData.payType! == "0">selected</#if>>支付状态</option>
+                <option value="2" <#if searchData.payType! == "1">selected</#if>>已支付</option>
+                <option value="1" <#if searchData.payType! == "2">selected</#if>>未支付</option>
             </select>
             </span>
             <span class="select-box inline">
-            <select name="place" class="select">
-
+            <select name="place" class="select" id="payType" name="payType">
+                <option value="0" <#if searchData.payType! == "0">selected</#if>>入金渠道</option>
+                <option value="3" <#if searchData.payType! == "1">selected</#if>>快捷支付</option>
+                <option value="1" <#if searchData.payType! == "2">selected</#if>>支付宝支付</option>
+                <option value="2" <#if searchData.payType! == "3">selected</#if>>微信支付</option>
+                <option value="4" <#if searchData.payType! == "4">selected</#if>>QQ支付</option>
             </select>
             </span>
 
@@ -83,7 +81,8 @@
         </tr>
         </thead>
         <tbody>
-
+        <#if data?exists>
+            <#list data as admin>
             <tr class="text-c">
                 <td></td>
                 <td></td>
@@ -94,7 +93,8 @@
                 <td></td>
                 <td></td>
             </tr>
-
+            </#list>
+        </#if>
         </tbody>
     </table>
     <#include "/admin/include/page.ftl">
