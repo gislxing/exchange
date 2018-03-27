@@ -96,4 +96,9 @@ public interface Const {
      * 当前用户等级
      */
     String SIGN_ADMIN_LEVEL = "level";
+
+    /**
+     * 默认密码
+     */
+    String DEFAULT_PASSWORD = "123456";
 }

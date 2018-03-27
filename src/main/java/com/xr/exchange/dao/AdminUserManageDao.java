@@ -22,8 +22,6 @@ public interface AdminUserManageDao {
 
     List<UserBean> getUsers(@Param("adminListBean") AdminListBean adminListBean, @Param("loginAdmin") AdminBean loginAdmin);
 
-    List<UserPayVo> getUserPayList(@Param("userPayListBean") UserPayListBean userPayListBean, @Param("loginAdmin") AdminBean loginAdmin);
-
     Integer updateUser(@Param("userListBean") UserListBean userListBean);
 
 }

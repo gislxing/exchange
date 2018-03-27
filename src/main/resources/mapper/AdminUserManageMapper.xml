@@ -40,31 +40,8 @@
         <id column="weiquanName" property="weiquanName" jdbcType="VARCHAR"/>
         <id column="yunyingName" property="yunyingName" jdbcType="VARCHAR"/>
     </resultMap>
-    <sql id="base_column_list">
-        t.id,
-        t.username,
-        t.password,
-        t.avatarPath,
-        t.realname,
-        t.sex,
-        t.money,
-        t.refreeId,
-        t.zongheId,
-        t.yunyingId,
-        t.jiaoyisuoId,
-        t.tradeable,
-        t.loginType,
-        t.chujinType,
-        t.lastLoginTime,
-        t.lastLoginIp,
-        t.addTime,
-        t.autonym,
-        t.cardShou,
-        t.cardCode,
-        t.cardZheng,
-        t.cardFan
-    </sql>
 
+    <!-- 用户列表 -->
     <resultMap id="userListResultMap" type="com.xr.exchange.model.UserListBean">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <id column="username" property="username" jdbcType="VARCHAR"/>
@@ -206,20 +183,24 @@
             AND b.weiquan_id = #{loginAdmin.id}
         </if>
     </select>
+
     <update id="updateUser">
         UPDATE t_user
-        <if test="userListBean.tradeable != null and userListBean.tradeable != ''">
+        <if test="userListBean.tradeable != null">
           SET tradeable = #{userListBean.tradeable}
         </if>
         <if test="userListBean.loginType != null and userListBean.loginType != ''">
-            SET tradeable = #{userListBean.loginType}
+            SET login_type = #{userListBean.loginType}
         </if>
         <if test="userListBean.chujinType != null and userListBean.chujinType != ''">
-            SET tradeable = #{userListBean.chujinType}
+            SET chujin_type = #{userListBean.chujinType}
+        </if>
+        <if test="userListBean.password != null and userListBean.password != ''">
+            SET password = #{userListBean.password}
         </if>
         WHERE 1 = 1
         <if test="userListBean.id != null and userListBean.id != ''">
-            id = #{userListBean.id}
+            AND id = #{userListBean.id}
         </if>
     </update>
 

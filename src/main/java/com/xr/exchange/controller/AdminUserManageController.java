@@ -6,6 +6,7 @@ import com.xr.exchange.constants.Const;
 import com.xr.exchange.model.AdminBean;
 import com.xr.exchange.model.UserListBean;
 import com.xr.exchange.service.AdminUserManageService;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,7 @@ public class AdminUserManageController {
         map.put(Const.STR_SEARCH_CONDITIONS, userPayListBean);
         return "admin/userPayList";
     }
+
     /**
      * 修改用户信息
      * @param userListBean
@@ -81,16 +83,39 @@ public class AdminUserManageController {
     public Map<String, Object> updateUser(UserListBean userListBean) {
         Integer count = adminUserManageService.updateUser(userListBean);
         String msg;
-        if (count == 0){
-            msg = "修改成功";
+        if (count >= 1){
+            msg = "操作成功";
         }else{
-            msg = "修改失败";
+            msg = "操作失败";
         }
 
         Map<String, Object> map = new HashMap<>();
         map.put(Const.STR_MSG, msg);
+        map.put(Const.STR_FLAG, String.valueOf(count));
         return map;
     }
 
+    /**
+     * 重置用户密码
+     * @param userListBean
+     * @return
+     */
+    @PostMapping("/reset/password")
+    @ResponseBody
+    public Map<String, Object> resetPassword(UserListBean userListBean) {
+        userListBean.setPassword(DigestUtils.md5Hex(Const.DEFAULT_PASSWORD));
+        Integer updateCount = adminUserManageService.updateUser(userListBean);
+        String msg;
+        if (updateCount == 0){
+            msg = "密码重置失败";
+        }else{
+            msg = "密码重置成功";
+        }
+
+        Map<String, Object> map = new HashMap<>();
+        map.put(Const.STR_MSG, msg);
+        map.put(Const.STR_FLAG, String.valueOf(updateCount));
+        return map;
+    }
 
 }
