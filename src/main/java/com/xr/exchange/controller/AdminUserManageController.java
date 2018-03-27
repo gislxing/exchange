@@ -1,15 +1,15 @@
 package com.xr.exchange.controller;
 
 import com.xr.exchange.bean.AdminListBean;
+import com.xr.exchange.bean.UserPayListBean;
 import com.xr.exchange.constants.Const;
 import com.xr.exchange.model.AdminBean;
-import com.xr.exchange.bean.UserPayListBean;
-import org.springframework.stereotype.Controller;
 import com.xr.exchange.model.UserListBean;
 import com.xr.exchange.service.AdminUserManageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
