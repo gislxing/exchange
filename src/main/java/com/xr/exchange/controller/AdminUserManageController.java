@@ -132,10 +132,41 @@ public class AdminUserManageController {
         return map;
     }
 
+    /**
+     * 用户交易数据
+     * @param map
+     * @param userParamBean
+     * @param session
+     * @return
+     */
     @GetMapping("/deal")
-    public String userDeal(Map<String, Object> map, UserParamBean userParamBean, HttpSession session) {
-        // 设置用户的交易状态为未结算
-        userParamBean.setSettlementFlag(Const.USER_DEAL_FLAG);
+    public String userDeal(Map<String, Object> map, UserParamBean userParamBean, HttpSession session) throws Exception {
+        return userDealSettlement(map, userParamBean, session, Const.USER_DEAL_FLAG);
+    }
+
+    /**
+     * 用户持仓数据
+     * @param map
+     * @param userParamBean
+     * @param session
+     * @return
+     */
+    @GetMapping("/settlement")
+    public String userSettlement(Map<String, Object> map, UserParamBean userParamBean, HttpSession session) throws Exception {
+        return userDealSettlement(map, userParamBean, session, Const.USER_SETTLEMENT_DEAL_FLAG);
+    }
+
+    /**
+     * 查询用户交易数据
+     * @param map
+     * @param userParamBean
+     * @param session
+     * @param settlementFlag
+     * @return
+     */
+    private String userDealSettlement(Map<String, Object> map, UserParamBean userParamBean, HttpSession session, int settlementFlag) throws Exception {
+        // 设置用户的交易状态为结算
+        userParamBean.setSettlementFlag(settlementFlag);
 
         // 分页查询用户交易数据
         AdminBean loginAdmin = (AdminBean) session.getAttribute(Const.KEY_SESSION_LOGIN_ADMIN);
@@ -148,7 +179,14 @@ public class AdminUserManageController {
 
         // 将搜索参数回传到前台用于参数回填
         map.put(Const.STR_SEARCH_CONDITIONS, userParamBean);
-        return "admin/user-deal";
+
+        if (settlementFlag == Const.USER_DEAL_FLAG){
+            return "admin/user-deal";
+        }else if (settlementFlag == Const.USER_SETTLEMENT_DEAL_FLAG){
+            return "admin/user-settlement-deal";
+        }else{
+            throw new Exception(String.format("用户交易状态错误: ", settlementFlag));
+        }
     }
 
 }
