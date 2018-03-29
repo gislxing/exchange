@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xr.exchange.dao.AdminDealDao">
+    <resultMap id="baseResultMap" type="com.xr.exchange.model.AdminDealBean">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <id column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+        <id column="buy_price" property="buyPrice" jdbcType="FLOAT"/>
+        <id column="deal_price" property="dealPrice" jdbcType="FLOAT"/>
+        <id column="buy_type" property="buyType" jdbcType="INTEGER"/>
+        <id column="buy_add_time" property="buyAddTime" jdbcType="TIMESTAMP"/>
+        <id column="buy_end_time" property="buyEndTime" jdbcType="TIMESTAMP"/>
+        <id column="buy_money" property="buyMoney" jdbcType="FLOAT"/>
+        <id column="buy_real_money" property="buyRealMoney" jdbcType="FLOAT"/>
+        <id column="buy_gain" property="buyGain" jdbcType="FLOAT"/>
+        <id column="over_flag" property="overFlag" jdbcType="INTEGER"/>
+        <id column="charge_money" property="chargeMoney" jdbcType="FLOAT"/>
+    </resultMap>
+
+    <resultMap id="dealResultMap" type="com.xr.exchange.bean.AdminUserDealBean">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <id column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+        <id column="buy_price" property="buyPrice" jdbcType="FLOAT"/>
+        <id column="deal_price" property="dealPrice" jdbcType="FLOAT"/>
+        <id column="buy_type" property="buyType" jdbcType="INTEGER"/>
+        <id column="buy_add_time" property="buyAddTime" jdbcType="TIMESTAMP"/>
+        <id column="buy_end_time" property="buyEndTime" jdbcType="TIMESTAMP"/>
+        <id column="buy_money" property="buyMoney" jdbcType="FLOAT"/>
+        <id column="buy_real_money" property="buyRealMoney" jdbcType="FLOAT"/>
+        <id column="buy_gain" property="buyGain" jdbcType="FLOAT"/>
+        <id column="over_flag" property="overFlag" jdbcType="INTEGER"/>
+        <id column="charge_money" property="chargeMoney" jdbcType="FLOAT"/>
+        <id column="username" property="username" jdbcType="VARCHAR"/>
+        <id column="realname" property="realname" jdbcType="VARCHAR"/>
+        <id column="comp_member_name" property="compMemberName" jdbcType="VARCHAR"/>
+        <id column="micro_proxy_name" property="microProxyName" jdbcType="VARCHAR"/>
+        <id column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="base_column_list">
+        t.id,
+        t.user_id,
+        t.goods_id,
+        t.buy_price,
+        t.deal_price,
+        t.buy_type,
+        t.buy_add_time,
+        t.buy_end_time,
+        t.buy_money,
+        t.buy_real_money,
+        t.buy_gain,
+        t.over_flag,
+        t.charge_money
+    </sql>
+
+    <select id="getUserDealList" resultMap="dealResultMap">
+        SELECT
+            *
+        FROM
+            (
+        SELECT
+            tu.username,
+            tu.realname,
+            tu.jiaoyisuo_id,
+            tu.yunying_id,
+            tu.zonghe_id,
+            tu.refree_id,
+            tac.username comp_member_name,
+            tam.username micro_proxy_name,
+            tg.NAME goods_name,
+            <include refid="base_column_list" />
+        FROM
+            t_order_info t
+            LEFT JOIN t_user tu ON tu.id = t.user_id
+            LEFT JOIN t_admin tac ON tu.zonghe_id = tac.id
+            LEFT JOIN t_admin tam ON tu.refree_id = tam.id
+            LEFT JOIN t_goods tg ON t.goods_id = tg.id
+        ) tt
+        WHERE
+            1 = 1
+        <if test="userParamBean.settlementFlag!=null">
+            AND tt.over_flag = #{userParamBean.settlementFlag}
+        </if>
+        <if test="userParamBean.conditions!=null and userParamBean.conditions!=''">
+            and (tt.username LIKE '%' #{userParamBean.conditions} '%' or tt.realname LIKE '%' #{userParamBean.conditions} '%')
+        </if>
+        <if test="userParamBean.goodsId!=null and userParamBean.goodsId!=''">
+            AND tt.goods_id = #{userParamBean.goodsId}
+        </if>
+        <if test="loginAdmin.level == 1">
+            AND tt.jiaoyisuo_id = #{loginAdmin.id}
+        </if>
+        <if test="loginAdmin.level == 2">
+            AND tt.yunying_id = #{loginAdmin.id}
+        </if>
+        <if test="loginAdmin.level == 3">
+            AND tt.zonghe_id = #{loginAdmin.id}
+        </if>
+        <if test="loginAdmin.level == 4">
+            AND tt.refree_id = #{loginAdmin.id}
+        </if>
+    </select>
+
+</mapper>

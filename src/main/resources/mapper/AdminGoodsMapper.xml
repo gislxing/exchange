@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xr.exchange.dao.AdminGoodsDao">
+    <resultMap id="baseResultMap" type="com.xr.exchange.model.GoodsBean">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <id column="name" property="name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="base_column_list">
+        t.id,
+        t.name
+    </sql>
+
+    <select id="getAll" resultMap="baseResultMap">
+        SELECT
+        <include refid="base_column_list" />
+        from t_goods t
+    </select>
+
+</mapper>
