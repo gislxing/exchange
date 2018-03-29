@@ -63,8 +63,6 @@
         <id column="weiquanName" property="weiquanName" jdbcType="VARCHAR"/>
         <id column="yunyingName" property="yunyingName" jdbcType="VARCHAR"/>
     </resultMap>
-
-    <!-- 用户列表 -->
     <resultMap id="userListResultMap" type="com.xr.exchange.model.UserListBean">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <id column="username" property="username" jdbcType="VARCHAR"/>
@@ -206,6 +204,7 @@
             AND b.weiquan_id = #{loginAdmin.id}
         </if>
     </select>
+
     <select id="getUserPopList" resultMap="popResultMap">
         select a.id as popId,b.id as userId,b.username,b.realname,b.money,a.pop_money as popMoney,a.pop_time as popTime,a.pop_app_time as popAppTime,a.pop_flag as popFlag,a.pop_name as popName,
         a.pop_code as popCode,a.pop_account popAccount,a.pop_phone as popPhone,a.pop_idcard as popIdcard,a.pop_do as popDo,
