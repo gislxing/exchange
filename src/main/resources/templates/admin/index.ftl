@@ -96,7 +96,16 @@
                 </ul>
             </dd>
         </dl>
-        <dl id="menu-goods">
+        <dl id="menu-my-capital">
+            <dt><i class="Hui-iconfont">&#xe602;</i> 我的资金<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a data-href="/admin/my/bank/card" data-title="我的银行卡" href="javascript:void(0)">我的银行卡</a></li>
+                    <li><a data-href="/admin/my/" data-title="出入金明细" href="javascript:void(0)">出入金明细</a></li>
+                </ul>
+            </dd>
+        </dl>
+        <dl id="menu-settings">
             <dt><i class="Hui-iconfont">&#xe62e;</i> 系统设置<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>

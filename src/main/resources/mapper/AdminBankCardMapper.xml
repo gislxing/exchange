@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xr.exchange.dao.AdminBankCardDao">
+    <resultMap id="baseResultMap" type="com.xr.exchange.model.AdminBankCardBean">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <id column="admin_id" property="adminId" jdbcType="INTEGER"/>
+        <id column="account_no" property="accountNo" jdbcType="VARCHAR"/>
+        <id column="account_name" property="accountName" jdbcType="VARCHAR"/>
+        <id column="bank_name" property="bankName" jdbcType="VARCHAR"/>
+        <id column="bank_phone" property="bankPhone" jdbcType="VARCHAR"/>
+        <id column="bank_idcard" property="bankIdcard" jdbcType="VARCHAR"/>
+        <id column="bank_flag" property="bankFlag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="base_column_list">
+        t.id,
+        t.admin_id,
+        t.account_no,
+        t.account_name,
+        t.bank_name,
+        t.bank_phone,
+        t.bank_idcard,
+        t.bank_flag
+    </sql>
+
+    <select id="getAll" resultMap="baseResultMap">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM
+        t_admin_bank t
+        where 1 = 1
+        <if test="loginAdminId != null and loginAdminId != ''">
+            and t.admin_id = #{loginAdminId}
+        </if>
+    </select>
+
+    <update id="updateStatus">
+        UPDATE t_admin_bank
+        SET bank_flag = #{status}
+        WHERE
+            id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE
+        FROM
+            t_admin_bank
+        WHERE
+            id = #{id}
+    </delete>
+
+    <insert id="save">
+        INSERT INTO t_admin_bank ( admin_id, account_no, account_name, bank_name, bank_phone, bank_idcard, bank_flag )
+        VALUES
+            ( #{adminBankCardBean.adminId}, #{adminBankCardBean.accountNo}, #{adminBankCardBean.accountName}, #{adminBankCardBean.bankName}, #{adminBankCardBean.bankPhone}, #{adminBankCardBean.bankIdcard}, #{adminBankCardBean.bankFlag} )
+    </insert>
+
+</mapper>
