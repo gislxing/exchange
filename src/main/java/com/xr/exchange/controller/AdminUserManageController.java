@@ -3,12 +3,14 @@ package com.xr.exchange.controller;
 import com.xr.exchange.bean.AdminListBean;
 import com.xr.exchange.bean.UserParamBean;
 import com.xr.exchange.bean.UserPayListBean;
+import com.xr.exchange.bean.UserPopListBean;
 import com.xr.exchange.constants.Const;
 import com.xr.exchange.model.AdminBean;
 import com.xr.exchange.model.GoodsBean;
 import com.xr.exchange.model.UserListBean;
 import com.xr.exchange.service.AdminDealService;
 import com.xr.exchange.service.AdminGoodsService;
+import com.xr.exchange.model.UserPopVo;
 import com.xr.exchange.service.AdminUserManageService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
@@ -78,13 +80,82 @@ public class AdminUserManageController {
     @GetMapping("/userPayList")
     public String adminList(UserPayListBean userPayListBean, HttpSession session, Map<String, Object> map) {
         AdminBean loginAdmin = (AdminBean) session.getAttribute(Const.KEY_SESSION_LOGIN_ADMIN);
-        Map<String, Object> dataMap = adminUserManageService.getUserPayList(userPayListBean, loginAdmin);
+        Map<String, Object> dataMap = adminUserManageService.getUserPayList(userPayListBean,loginAdmin);
         map.put(Const.STR_DATA, dataMap.get(Const.STR_DATA));
         map.put(Const.STR_PAGE_INFO, dataMap.get(Const.STR_PAGE_INFO));
         map.put(Const.STR_SEARCH_CONDITIONS, userPayListBean);
         return "admin/userPayList";
     }
 
+    /**
+     * 客户出金明细列表
+     *
+     * @param
+     * @param
+     * @param map
+     * @return
+     */
+    @GetMapping("/userPopList")
+    public String userPopList(UserPopListBean userPopListBean, HttpSession session, Map<String, Object> map) {
+        AdminBean loginAdmin = (AdminBean) session.getAttribute(Const.KEY_SESSION_LOGIN_ADMIN);
+        Map<String, Object> dataMap = adminUserManageService.getUserPopList(userPopListBean,loginAdmin);
+        map.put(Const.STR_DATA, dataMap.get(Const.STR_DATA));
+        map.put(Const.STR_PAGE_INFO, dataMap.get(Const.STR_PAGE_INFO));
+        map.put(Const.STR_SEARCH_CONDITIONS, userPopListBean);
+        map.put(Const.KEY_SESSION_LOGIN_ADMIN, loginAdmin);
+        return "admin/userPopInfoList";
+    }
+    /**
+     * 客户出金通过
+     *
+     * @param
+     * @param
+     * @param
+     * @return
+     */
+    @PostMapping("/agreePop")
+    @ResponseBody
+    public String agreePop(UserPopVo userPopVo) {
+
+        //Integer count = adminUserManageService.updateUser(userListBean);
+        /*String msg;
+        if (count == 0){
+            msg = "修改成功";
+        }else{
+            msg = "修改失败";
+        }*/
+
+        /*Map<String, Object> map = new HashMap<>();
+        map.put(Const.STR_MSG, msg);
+        return map;*/
+        return "";
+    }
+    /**
+     * 客户出金驳回
+     *
+     * @param
+     * @param
+     * @param
+     * @return
+     */
+    @PostMapping("/rebutPop")
+    @ResponseBody
+    public Map<String, Object> rebutPop(UserPopVo userPopVo) {
+        boolean ret = adminUserManageService.rebutPop(userPopVo);
+        String msg;
+        String flag;
+        if (ret == true){
+            msg = "驳回成功";
+            flag = Const.SUCCESS_FLAG;
+        }else{
+            msg = "驳回失败";
+            flag = Const.FAILED_FLAG;
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put(Const.STR_MSG, msg);
+        map.put(Const.STR_FLAG, flag);
+        return map;
+    }
     /**
      * 修改用户信息
      *

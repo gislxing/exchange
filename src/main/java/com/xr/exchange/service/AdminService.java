@@ -1,7 +1,11 @@
 package com.xr.exchange.service;
 
 import com.xr.exchange.bean.AdminListBean;
+import com.xr.exchange.bean.ProxyPayListBean;
+import com.xr.exchange.bean.ProxyPopListBean;
 import com.xr.exchange.model.AdminBean;
+import com.xr.exchange.model.ProxyPopVo;
+import com.xr.exchange.model.UserPopVo;
 
 import java.util.Map;
 
@@ -65,4 +69,33 @@ public interface AdminService {
      * @param adminBean
      */
     Integer upPassword(String oldpassword, String password, int id);
+
+    /**
+     * 代理入金列表
+     * @param proxyPayListBean
+     * @param loginAdmin
+     * @return
+     */
+    Map<String, Object> getProxyPayList(ProxyPayListBean proxyPayListBean, AdminBean loginAdmin);
+
+    /**
+     * 代理出金列表
+     * @param proxyPopListBean
+     * @param loginAdmin
+     * @return
+     */
+    Map<String, Object> getProxyPopList(ProxyPopListBean proxyPopListBean, AdminBean loginAdmin);
+
+    /**
+     * 代理出金驳回
+     * @param proxyPopVo
+     * @return
+     */
+    Boolean rebutPop(ProxyPopVo proxyPopVo);
+    /**
+     * 代理出金同意
+     * @param proxyPopVo
+     * @return
+     */
+    Boolean agreePop(ProxyPopVo proxyPopVo);
 }

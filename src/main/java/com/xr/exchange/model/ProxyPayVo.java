@@ -9,8 +9,9 @@ import java.util.Date;
  * @author zjw
  * @create 2018/3/26.
  */
-public class UserPayVo extends UserBean {
+public class ProxyPayVo extends AdminBean {
     private int payType;//1支付宝，2微信，3快捷支付，4QQ支付，5网银支付
+    private Integer payId;//
     private Float payMoney;//支付金额
     private int payFlag;//支付状态，1未支付，2支付成功,3支付失败
     private Date payTime;//支付时间
@@ -19,6 +20,14 @@ public class UserPayVo extends UserBean {
     private String zongheName;
     private String weiquanName;
     private String yunyingName;
+
+    public Integer getPayId() {
+        return payId;
+    }
+
+    public void setPayId(Integer payId) {
+        this.payId = payId;
+    }
 
     public int getPayType() {
         return payType;

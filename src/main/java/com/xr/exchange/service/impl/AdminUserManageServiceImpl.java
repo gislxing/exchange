@@ -3,17 +3,18 @@ package com.xr.exchange.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.xr.exchange.bean.AdminListBean;
 import com.xr.exchange.bean.UserPayListBean;
+import com.xr.exchange.bean.UserPopListBean;
+import com.xr.exchange.constants.Const;
+import com.xr.exchange.dao.AdminDao;
 import com.xr.exchange.dao.AdminUserManageDao;
-import com.xr.exchange.model.AdminBean;
-import com.xr.exchange.model.UserBean;
-import com.xr.exchange.model.UserListBean;
-import com.xr.exchange.model.UserPayVo;
+import com.xr.exchange.model.*;
 import com.xr.exchange.service.AdminUserManageService;
 import com.xr.exchange.utils.PageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,26 @@ public class AdminUserManageServiceImpl implements AdminUserManageService {
         PageHelper.startPage(userPayListBean.getPageNum(), userPayListBean.getPageSize());
         List<UserPayVo> list = adminUserManageDao.getUserPayList(userPayListBean, loginAdmin);
         return PageUtil.getPageData(list);
+    }
+
+    @Override
+    public Map<String, Object> getUserPopList(UserPopListBean userPopListBean, AdminBean loginAdmin) {
+        PageHelper.startPage(userPopListBean.getPageNum(), userPopListBean.getPageSize());
+        List<UserPopVo> list = adminUserManageDao.getUserPopList(userPopListBean,loginAdmin);
+        return PageUtil.getPageData(list);
+    }
+
+    @Override
+    public Boolean rebutPop(UserPopVo userPopVo) {
+        Boolean ret = true;
+        try {
+            adminUserManageDao.rebutPop(userPopVo);
+            adminUserManageDao.updateUserMoney(userPopVo.getUserId(),userPopVo.getPopMoney());
+        }catch (Exception ex){
+            ret = false;
+            log.error(ex.toString());
+        }
+        return ret;
     }
 
     /**

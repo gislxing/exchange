@@ -172,4 +172,124 @@
         WHERE id = #{id}
     </update>
 
+    <!--代理入金列表-->
+    <resultMap id="proxyPayResultMap" type="com.xr.exchange.model.ProxyPayVo">
+        <id column="payId" property="payId" jdbcType="INTEGER"/>
+        <id column="username" property="username" jdbcType="VARCHAR"/>
+        <id column="realname" property="realname" jdbcType="VARCHAR"/>
+        <id column="phone" property="phone" jdbcType="VARCHAR"/>
+        <id column="payMoney" property="payMoney" jdbcType="DECIMAL"/>
+        <id column="payNo" property="payNo" jdbcType="VARCHAR"/>
+        <id column="payTime" property="payTime" jdbcType="TIMESTAMP"/>
+        <id column="payFlag" property="payFlag" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="getProxyPayList" resultMap="proxyPayResultMap">
+        select a.id as payId,b.username,b.realname,b.phone,a.money as payMoney,a.pay_time as payTime,a.pay_flag as payFlag from t_admin_pay_info a
+        left join t_admin b on a.admin_id = b.id
+        where 1=1
+        <if test="proxyPayListBean.conditions!=null and proxyPayListBean.conditions!=''">
+            and (b.username LIKE '%' #{proxyPayListBean.conditions} '%' or b.realname LIKE '%' #{proxyPayListBean.conditions}
+            '%')
+        </if>
+        <if test="proxyPayListBean.addStartTime!=null and proxyPayListBean.addStartTime!=''">
+            AND a.pay_time &gt;= CONCAT(#{proxyPayListBean.addStartTime},' 00:00:00')
+        </if>
+        <if test="proxyPayListBean.addEndTime!=null and proxyPayListBean.addEndTime!=''">
+            AND a.pay_time &lt;= CONCAT(#{proxyPayListBean.addEndTime},' 23:59:59')
+        </if>
+        <if test="proxyPayListBean.payFlag!=null and proxyPayListBean.payFlag!=''">
+            AND a.pay_flag =#{proxyPayListBean.payFlag}
+        </if>
+        <if test="loginAdmin.level==1">
+            AND b.jiaoyisuo_id = #{loginAdmin.id}
+        </if>
+        <if test="loginAdmin.level==2">
+            AND b.yunying_id = #{loginAdmin.id}
+        </if>
+        <if test="loginAdmin.level==3">
+            AND b.zonghe_id = #{loginAdmin.id}
+        </if>
+        <if test="loginAdmin.level==4">
+            AND b.weiquan_id = #{loginAdmin.id}
+        </if>
+        order by a.pay_time desc
+    </select>
+
+    <!--代理出金列表-->
+    <resultMap id="proxyPopResultMap" type="com.xr.exchange.model.ProxyPopVo">
+        <id column="popId" property="popId" jdbcType="INTEGER"/>
+        <id column="adminId" property="adminId" jdbcType="VARCHAR"/>
+        <id column="username" property="username" jdbcType="VARCHAR"/>
+        <id column="realname" property="realname" jdbcType="VARCHAR"/>
+        <id column="money" property="money" jdbcType="DECIMAL"/>
+        <id column="popMoney" property="popMoney" jdbcType="DECIMAL"/>
+        <id column="popTime" property="popTime" jdbcType="TIMESTAMP"/>
+        <id column="popAppTime" property="popAppTime" jdbcType="TIMESTAMP"/>
+        <id column="popFlag" property="popFlag" jdbcType="INTEGER"/>
+        <id column="popName" property="popName" jdbcType="VARCHAR"/>
+        <id column="popCode" property="popCode" jdbcType="VARCHAR"/>
+        <id column="popAccount" property="popAccount" jdbcType="VARCHAR"/>
+        <id column="popPhone" property="popPhone" jdbcType="VARCHAR"/>
+        <id column="popIdcard" property="popIdcard" jdbcType="VARCHAR"/>
+        <id column="popDo" property="popDo" jdbcType="INTEGER"/>
+        <id column="zongheName" property="zongheName" jdbcType="VARCHAR"/>
+        <id column="weiquanName" property="weiquanName" jdbcType="VARCHAR"/>
+        <id column="yunyingName" property="yunyingName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getProxyPopList" resultMap="proxyPopResultMap">
+        select a.id as popId,a.admin_id as adminId,b.username,b.phone,b.realname,a.pop_money as popMoney,a.pop_time as popTime,a.pop_flag as popFlag,a.pop_name as popName,a.pop_code as popCode,a.pop_account as popAccount,a.pop_phone as popPhone,a.pop_idcard as popIdcard from t_admin_pop_info a
+        left join t_admin b on a.admin_id = b.id
+        where 1=1
+        <if test="proxyPopListBean.bankUserName!=null and proxyPopListBean.bankUserName!=''">
+            and a.pop_name = #{proxyPopListBean.bankUserName}
+        </if>
+        <if test="proxyPopListBean.bankName!=null and proxyPopListBean.bankName!=''">
+            and a.pop_account = #{proxyPopListBean.bankName}
+        </if>
+
+        <if test="proxyPopListBean.addStartTime!=null and proxyPopListBean.addStartTime!=''">
+            AND a.pop_time &gt;= CONCAT(#{proxyPopListBean.addStartTime},' 00:00:00')
+        </if>
+        <if test="proxyPopListBean.addEndTime!=null and proxyPopListBean.addEndTime!=''">
+            AND a.pop_time &lt;= CONCAT(#{proxyPopListBean.addEndTime},' 23:59:59')
+        </if>
+        <if test="proxyPopListBean.appStartTime!=null and proxyPopListBean.appStartTime!=''">
+            AND a.pop_app_time &gt;= CONCAT(#{proxyPopListBean.appStartTime},' 00:00:00')
+        </if>
+        <if test="proxyPopListBean.appEndTime!=null and proxyPopListBean.appEndTime!=''">
+            AND a.pop_app_time &lt;= CONCAT(#{proxyPopListBean.appEndTime},' 23:59:59')
+        </if>
+        <if test="proxyPopListBean.popFlag!=null and proxyPopListBean.popFlag!=''">
+            AND a.pop_flag =#{proxyPopListBean.popFlag}
+        </if>
+        <if test="loginAdmin.level==1">
+            AND b.jiaoyisuo_id = #{loginAdmin.id}
+        </if>
+        <if test="loginAdmin.level==2">
+            AND b.yunying_id = #{loginAdmin.id}
+        </if>
+        <if test="loginAdmin.level==3">
+            AND b.zonghe_id = #{loginAdmin.id}
+        </if>
+        <if test="loginAdmin.level==4">
+            AND b.weiquan_id = #{loginAdmin.id}
+        </if>
+        order by a.pop_time desc
+    </select>
+    <!-- 代理出金驳回 -->
+    <update id="rebutPop">
+        UPDATE t_admin_pop_info
+        SET pop_flag = #{proxyPopVo.popFlag},
+        pop_app_time = NOW()
+        WHERE 1 = 1
+        and id = #{proxyPopVo.popId}
+    </update>
+    <update id="updateAdminMoney">
+        UPDATE t_admin
+
+        SET money =  #{money}+money
+
+        WHERE 1 = 1
+        and id = #{adminId}
+    </update>
 </mapper>

@@ -2,10 +2,8 @@ package com.xr.exchange.dao;
 
 import com.xr.exchange.bean.AdminListBean;
 import com.xr.exchange.bean.UserPayListBean;
-import com.xr.exchange.model.AdminBean;
-import com.xr.exchange.model.UserBean;
-import com.xr.exchange.model.UserListBean;
-import com.xr.exchange.model.UserPayVo;
+import com.xr.exchange.bean.UserPopListBean;
+import com.xr.exchange.model.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -19,6 +17,12 @@ import java.util.List;
 public interface AdminUserManageDao {
 
     List<UserPayVo> getUserPayList(@Param("userPayListBean") UserPayListBean userPayListBean, @Param("loginAdmin") AdminBean loginAdmin);
+
+    List<UserPopVo> getUserPopList(@Param("userPopListBean") UserPopListBean userPopListBean, @Param("loginAdmin") AdminBean loginAdmin);
+
+    Integer rebutPop(@Param("userPopVo") UserPopVo userPopVo);
+
+    void updateUserMoney(@Param("userId") Integer userId,@Param("money") float money);
 
     List<UserBean> getUsers(@Param("adminListBean") AdminListBean adminListBean, @Param("loginAdmin") AdminBean loginAdmin);
 
