@@ -1,8 +1,11 @@
 package com.xr.exchange.controller;
 
 import com.xr.exchange.bean.AdminListBean;
+import com.xr.exchange.bean.ProxyPayListBean;
+import com.xr.exchange.bean.ProxyPopListBean;
 import com.xr.exchange.constants.Const;
 import com.xr.exchange.model.AdminBean;
+import com.xr.exchange.model.ProxyPopVo;
 import com.xr.exchange.service.AdminService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
@@ -247,6 +250,93 @@ public class AdminProxyController {
         map.put(Const.STR_MSG, msg);
         map.put(Const.STR_FLAG, flag);
 
+        return map;
+    }
+    /**
+     * 代理入金明细列表
+     *
+     * @param
+     * @param
+     * @param map
+     * @return
+     */
+    @GetMapping("/proxyPayList")
+    public String proxyPayList(ProxyPayListBean proxyPayListBean, HttpSession session, Map<String, Object> map) {
+        AdminBean loginAdmin = (AdminBean) session.getAttribute(Const.KEY_SESSION_LOGIN_ADMIN);
+        Map<String, Object> dataMap = adminService.getProxyPayList(proxyPayListBean,loginAdmin);
+        map.put(Const.STR_DATA, dataMap.get(Const.STR_DATA));
+        map.put(Const.STR_PAGE_INFO, dataMap.get(Const.STR_PAGE_INFO));
+        map.put(Const.STR_SEARCH_CONDITIONS, proxyPayListBean);
+        return "admin/proxyPayList";
+    }
+    /**
+     * 代理出金明细列表
+     *
+     * @param
+     * @param
+     * @param map
+     * @return
+     */
+    @GetMapping("/porxyPopList")
+    public String porxyPopList(ProxyPopListBean proxyPopListBean, HttpSession session, Map<String, Object> map) {
+        AdminBean loginAdmin = (AdminBean) session.getAttribute(Const.KEY_SESSION_LOGIN_ADMIN);
+        Map<String, Object> dataMap = adminService.getProxyPopList(proxyPopListBean,loginAdmin);
+        map.put(Const.STR_DATA, dataMap.get(Const.STR_DATA));
+        map.put(Const.STR_PAGE_INFO, dataMap.get(Const.STR_PAGE_INFO));
+        map.put(Const.STR_SEARCH_CONDITIONS, proxyPopListBean);
+        map.put(Const.KEY_SESSION_LOGIN_ADMIN, loginAdmin);
+        return "admin/proxyPopInfoList";
+    }
+    /**
+     * 代理出金驳回
+     *
+     * @param
+     * @param
+     * @param
+     * @return
+     */
+    @PostMapping("/rebutPop")
+    @ResponseBody
+    public Map<String, Object> rebutPop(ProxyPopVo proxyPopVo) {
+        boolean ret = adminService.rebutPop(proxyPopVo);
+        String msg;
+        String flag;
+        if (ret == true){
+            msg = "驳回成功";
+            flag = Const.SUCCESS_FLAG;
+        }else{
+            msg = "驳回失败";
+            flag = Const.FAILED_FLAG;
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put(Const.STR_MSG, msg);
+        map.put(Const.STR_FLAG, flag);
+        return map;
+    }
+    /**
+     * 代理出金通过
+     *
+     * @param
+     * @param
+     * @param
+     * @return
+     */
+    @PostMapping("/agreePop")
+    @ResponseBody
+    public Map<String, Object> agreePop(ProxyPopVo proxyPopVo) {
+        boolean ret = adminService.rebutPop(proxyPopVo);
+        String msg;
+        String flag;
+        if (ret == true){
+            msg = "驳回成功";
+            flag = Const.SUCCESS_FLAG;
+        }else{
+            msg = "驳回失败";
+            flag = Const.FAILED_FLAG;
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put(Const.STR_MSG, msg);
+        map.put(Const.STR_FLAG, flag);
         return map;
     }
 }

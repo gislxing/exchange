@@ -40,31 +40,27 @@
         <id column="weiquanName" property="weiquanName" jdbcType="VARCHAR"/>
         <id column="yunyingName" property="yunyingName" jdbcType="VARCHAR"/>
     </resultMap>
-    <sql id="base_column_list">
-        t.id,
-        t.username,
-        t.password,
-        t.avatarPath,
-        t.realname,
-        t.sex,
-        t.money,
-        t.refreeId,
-        t.zongheId,
-        t.yunyingId,
-        t.jiaoyisuoId,
-        t.tradeable,
-        t.loginType,
-        t.chujinType,
-        t.lastLoginTime,
-        t.lastLoginIp,
-        t.addTime,
-        t.autonym,
-        t.cardShou,
-        t.cardCode,
-        t.cardZheng,
-        t.cardFan
-    </sql>
-
+    <!--客户出金列表-->
+    <resultMap id="popResultMap" type="com.xr.exchange.model.UserPopVo">
+        <id column="popId" property="popId" jdbcType="INTEGER"/>
+        <id column="userId" property="userId" jdbcType="VARCHAR"/>
+        <id column="username" property="username" jdbcType="VARCHAR"/>
+        <id column="realname" property="realname" jdbcType="VARCHAR"/>
+        <id column="money" property="money" jdbcType="DECIMAL"/>
+        <id column="popMoney" property="popMoney" jdbcType="DECIMAL"/>
+        <id column="popTime" property="popTime" jdbcType="TIMESTAMP"/>
+        <id column="popAppTime" property="popAppTime" jdbcType="TIMESTAMP"/>
+        <id column="popFlag" property="popFlag" jdbcType="INTEGER"/>
+        <id column="popName" property="popName" jdbcType="VARCHAR"/>
+        <id column="popCode" property="popCode" jdbcType="VARCHAR"/>
+        <id column="popAccount" property="popAccount" jdbcType="VARCHAR"/>
+        <id column="popPhone" property="popPhone" jdbcType="VARCHAR"/>
+        <id column="popIdcard" property="popIdcard" jdbcType="VARCHAR"/>
+        <id column="popDo" property="popDo" jdbcType="INTEGER"/>
+        <id column="zongheName" property="zongheName" jdbcType="VARCHAR"/>
+        <id column="weiquanName" property="weiquanName" jdbcType="VARCHAR"/>
+        <id column="yunyingName" property="yunyingName" jdbcType="VARCHAR"/>
+    </resultMap>
     <resultMap id="userListResultMap" type="com.xr.exchange.model.UserListBean">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <id column="username" property="username" jdbcType="VARCHAR"/>
@@ -188,10 +184,58 @@
             AND a.pay_time &lt;= CONCAT(#{userPayListBean.addEndTime},' 23:59:59')
         </if>
         <if test="userPayListBean.payFlag!=null and userPayListBean.payFlag!=''">
-            AND a.pay_flag =(#{userPayListBean.payFlag}
+            AND a.pay_flag =#{userPayListBean.payFlag}
         </if>
         <if test="userPayListBean.payType!=null and userPayListBean.payType!=''">
-            AND a.pay_type =(#{userPayListBean.payType}
+            AND a.pay_type =#{userPayListBean.payType}
+        </if>
+        <if test="loginAdmin.level==1">
+            AND b.jiaoyisuo_id = #{loginAdmin.id}
+        </if>
+        <if test="loginAdmin.level==2">
+            AND b.yunying_id = #{loginAdmin.id}
+        </if>
+        <if test="loginAdmin.level==3">
+            AND b.zonghe_id = #{loginAdmin.id}
+        </if>
+        <if test="loginAdmin.level==4">
+            AND b.weiquan_id = #{loginAdmin.id}
+        </if>
+    </select>
+    <select id="getUserPopList" resultMap="popResultMap">
+        select a.id as popId,b.id as userId,b.username,b.realname,b.money,a.pop_money as popMoney,a.pop_time as popTime,a.pop_app_time as popAppTime,a.pop_flag as popFlag,a.pop_name as popName,
+        a.pop_code as popCode,a.pop_account popAccount,a.pop_phone as popPhone,a.pop_idcard as popIdcard,a.pop_do as popDo,
+        c.username as yunyingName,d.username as zongheName,e.username as weiquanName
+        from t_user_pop_info a
+        left join t_user b on a.user_id = b.id
+        left join t_admin c on c.id = b.yunying_id
+        left join t_admin d on d.id = b.zonghe_id
+        left join t_admin e on e.id = b.refree_id
+        where 1=1
+        <if test="userPopListBean.bankUserName!=null and userPopListBean.bankUserName!=''">
+            and a.pop_name = #{userPopListBean.bankUserName}
+        </if>
+        <if test="userPopListBean.bankName!=null and userPopListBean.bankName!=''">
+            and a.pop_account = #{userPopListBean.bankName}
+        </if>
+
+        <if test="userPopListBean.addStartTime!=null and userPopListBean.addStartTime!=''">
+            AND a.pop_time &gt;= CONCAT(#{userPopListBean.addStartTime},' 00:00:00')
+        </if>
+        <if test="userPopListBean.addEndTime!=null and userPopListBean.addEndTime!=''">
+            AND a.pop_time &lt;= CONCAT(#{userPopListBean.addEndTime},' 23:59:59')
+        </if>
+        <if test="userPopListBean.appStartTime!=null and userPopListBean.appStartTime!=''">
+            AND a.pop_app_time &gt;= CONCAT(#{userPopListBean.appStartTime},' 00:00:00')
+        </if>
+        <if test="userPopListBean.appEndTime!=null and userPopListBean.appEndTime!=''">
+            AND a.pop_app_time &lt;= CONCAT(#{userPopListBean.appEndTime},' 23:59:59')
+        </if>
+        <if test="userPopListBean.popFlag!=null and userPopListBean.popFlag!=''">
+            AND a.pop_flag =#{userPopListBean.popFlag}
+        </if>
+        <if test="userPopListBean.popDo!=null and userPopListBean.popDo!=''">
+            AND a.pop_do =#{userPopListBean.popDo}
         </if>
         <if test="loginAdmin.level==1">
             AND b.jiaoyisuo_id = #{loginAdmin.id}
@@ -222,5 +266,20 @@
             id = #{userListBean.id}
         </if>
     </update>
+    <!-- 用户出金驳回 -->
+    <update id="rebutPop">
+        UPDATE t_user_pop_info
+        SET pop_flag = #{userPopVo.popFlag},
+        pop_app_time = NOW()
+        WHERE 1 = 1
+            and id = #{userPopVo.popId}
+    </update>
+    <update id="updateUserMoney">
+        UPDATE t_user
 
+        SET money =  #{money}+money
+
+        WHERE 1 = 1
+        and id = #{userId}
+    </update>
 </mapper>

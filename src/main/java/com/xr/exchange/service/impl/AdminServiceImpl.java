@@ -3,9 +3,14 @@ package com.xr.exchange.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xr.exchange.bean.AdminListBean;
+import com.xr.exchange.bean.ProxyPayListBean;
+import com.xr.exchange.bean.ProxyPopListBean;
 import com.xr.exchange.constants.Const;
 import com.xr.exchange.dao.AdminDao;
 import com.xr.exchange.model.AdminBean;
+import com.xr.exchange.model.ProxyPayVo;
+import com.xr.exchange.model.ProxyPopVo;
+import com.xr.exchange.model.UserPopVo;
 import com.xr.exchange.service.AdminService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
@@ -131,5 +136,54 @@ public class AdminServiceImpl implements AdminService {
         oldpassword = DigestUtils.md5Hex(oldpassword);
         password = DigestUtils.md5Hex(password);
         return adminDao.upPassword(oldpassword,password,id);
+    }
+
+    @Override
+    public Map<String, Object> getProxyPayList(ProxyPayListBean proxyPayListBean, AdminBean loginAdmin) {
+        PageHelper.startPage(proxyPayListBean.getPageNum(), proxyPayListBean.getPageSize());
+        List<ProxyPayVo> list = adminDao.getProxyPayList(proxyPayListBean,loginAdmin);
+
+        // 分页信息包括总页数，当前页，总数据等
+        PageInfo pageInfo = new PageInfo(list);
+        Map<String,Object> map = new HashMap<>();
+        map.put(Const.STR_DATA,list);
+        map.put(Const.STR_PAGE_INFO,pageInfo);
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> getProxyPopList(ProxyPopListBean proxyPopListBean, AdminBean loginAdmin) {
+        PageHelper.startPage(proxyPopListBean.getPageNum(), proxyPopListBean.getPageSize());
+        List<ProxyPopVo> list = adminDao.getProxyPopList(proxyPopListBean,loginAdmin);
+        // 分页信息包括总页数，当前页，总数据等
+        PageInfo pageInfo = new PageInfo(list);
+        Map<String,Object> map = new HashMap<>();
+        map.put(Const.STR_DATA,list);
+        map.put(Const.STR_PAGE_INFO,pageInfo);
+        return map;
+    }
+
+    @Override
+    public Boolean rebutPop(ProxyPopVo proxyPopVo) {
+        Boolean ret = true;
+        try {
+            adminDao.rebutPop(proxyPopVo);
+            adminDao.updateAdminMoney(proxyPopVo.getAdminId(),proxyPopVo.getPopMoney());
+        }catch (Exception ex){
+            ret = false;
+            log.error(ex.toString());
+        }
+        return ret;
+    }
+    @Override
+    public Boolean agreePop(ProxyPopVo proxyPopVo) {
+        Boolean ret = true;
+        try {
+            adminDao.rebutPop(proxyPopVo);
+        }catch (Exception ex){
+            ret = false;
+            log.error(ex.toString());
+        }
+        return ret;
     }
 }
