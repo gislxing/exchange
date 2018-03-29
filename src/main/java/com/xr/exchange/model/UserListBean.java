@@ -18,9 +18,9 @@ public class UserListBean {
     private Integer zongheId;
     private Integer yunyingId;
     private Integer jiaoyisuoId;
-    private int tradeable;
-    private int loginType;
-    private int chujinType;
+    private Integer tradeable;
+    private Integer loginType;
+    private Integer chujinType;
     private Date lastLoginTime;
     private String lastLoginIp;
     private Date addTime;
@@ -30,6 +30,7 @@ public class UserListBean {
     private String cardFan;
     private String compMemberName;
     private String microProxyName;
+    private String password;
 
     public Integer getId() {
         return id;
@@ -95,27 +96,27 @@ public class UserListBean {
         this.jiaoyisuoId = jiaoyisuoId;
     }
 
-    public int getTradeable() {
+    public Integer getTradeable() {
         return tradeable;
     }
 
-    public void setTradeable(int tradeable) {
+    public void setTradeable(Integer tradeable) {
         this.tradeable = tradeable;
     }
 
-    public int getLoginType() {
+    public Integer getLoginType() {
         return loginType;
     }
 
-    public void setLoginType(int loginType) {
+    public void setLoginType(Integer loginType) {
         this.loginType = loginType;
     }
 
-    public int getChujinType() {
+    public Integer getChujinType() {
         return chujinType;
     }
 
-    public void setChujinType(int chujinType) {
+    public void setChujinType(Integer chujinType) {
         this.chujinType = chujinType;
     }
 
@@ -191,4 +192,11 @@ public class UserListBean {
         this.microProxyName = microProxyName;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

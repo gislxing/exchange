@@ -26,6 +26,7 @@
         <id column="card_zheng" property="cardZheng" jdbcType="VARCHAR"/>
         <id column="card_fan" property="cardFan" jdbcType="VARCHAR"/>
     </resultMap>
+
     <!--客户入金列表-->
     <resultMap id="payResultMap" type="com.xr.exchange.model.UserPayVo">
         <id column="username" property="username" jdbcType="VARCHAR"/>
@@ -40,6 +41,7 @@
         <id column="weiquanName" property="weiquanName" jdbcType="VARCHAR"/>
         <id column="yunyingName" property="yunyingName" jdbcType="VARCHAR"/>
     </resultMap>
+
     <!--客户出金列表-->
     <resultMap id="popResultMap" type="com.xr.exchange.model.UserPopVo">
         <id column="popId" property="popId" jdbcType="INTEGER"/>
@@ -61,6 +63,8 @@
         <id column="weiquanName" property="weiquanName" jdbcType="VARCHAR"/>
         <id column="yunyingName" property="yunyingName" jdbcType="VARCHAR"/>
     </resultMap>
+
+    <!-- 用户列表 -->
     <resultMap id="userListResultMap" type="com.xr.exchange.model.UserListBean">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <id column="username" property="username" jdbcType="VARCHAR"/>
@@ -250,22 +254,27 @@
             AND b.weiquan_id = #{loginAdmin.id}
         </if>
     </select>
+
     <update id="updateUser">
         UPDATE t_user
-        <if test="userListBean.tradeable != null and userListBean.tradeable != ''">
+        <if test="userListBean.tradeable != null">
           SET tradeable = #{userListBean.tradeable}
         </if>
         <if test="userListBean.loginType != null and userListBean.loginType != ''">
-            SET tradeable = #{userListBean.loginType}
+            SET login_type = #{userListBean.loginType}
         </if>
         <if test="userListBean.chujinType != null and userListBean.chujinType != ''">
-            SET tradeable = #{userListBean.chujinType}
+            SET chujin_type = #{userListBean.chujinType}
+        </if>
+        <if test="userListBean.password != null and userListBean.password != ''">
+            SET password = #{userListBean.password}
         </if>
         WHERE 1 = 1
         <if test="userListBean.id != null and userListBean.id != ''">
-            id = #{userListBean.id}
+            AND id = #{userListBean.id}
         </if>
     </update>
+
     <!-- 用户出金驳回 -->
     <update id="rebutPop">
         UPDATE t_user_pop_info

@@ -96,4 +96,24 @@ public interface Const {
      * 当前用户等级
      */
     String SIGN_ADMIN_LEVEL = "level";
+
+    /**
+     * 默认密码
+     */
+    String DEFAULT_PASSWORD = "123456";
+
+    /**
+     * 用户交易标志
+     */
+    Integer USER_DEAL_FLAG = 0;
+
+    /**
+     * 用户持仓标志
+     */
+    Integer USER_SETTLEMENT_DEAL_FLAG = 1;
+
+    /**
+     * 商品标志
+     */
+    String STR_GOODS_FLAG = "goodsList";
 }

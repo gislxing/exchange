@@ -58,8 +58,8 @@
             <dd>
                 <ul>
                     <li><a data-href="/admin/user/list" data-title="客户列表" href="javascript:void(0)">客户列表</a></li>
-                    <li><a data-href="/wel" data-title="客户交易" href="javascript:void(0)">客户交易</a></li>
-                    <li><a data-href="/wel" data-title="客户持仓" href="javascript:void(0)">客户持仓</a></li>
+                    <li><a data-href="/admin/user/deal" data-title="客户交易" href="javascript:void(0)">客户交易</a></li>
+                    <li><a data-href="/admin/user/settlement" data-title="客户持仓" href="javascript:void(0)">客户持仓</a></li>
                 </ul>
             </dd>
         </dl>

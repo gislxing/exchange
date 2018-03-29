@@ -99,16 +99,16 @@
                                         onclick="resetPassword('${user.id!}');">重置密码
                                 </button>
                                 <button type="button" class="btn btn-danger radius" <#if user.loginType == 2>disabled</#if>
-                                              onclick="jinzhidenglu('${user.id!}',2);"> 禁止登录
+                                              onclick="changeLoginStatus('${user.id!}',2);"> 禁止登录
                                 </button>
                                 <button type="button" class="btn btn-success radius" <#if user.loginType == 1>disabled</#if>
-                                              onclick="jinzhidenglu('${user.id!}',1);"> 恢复登录
+                                              onclick="changeLoginStatus('${user.id!}',1);"> 恢复登录
                                 </button>
                                 <button type="button" class="btn btn-warning radius" <#if user.chujinType == 2>disabled</#if>
-                                        onclick="jinzhichujin('${user.id!}',2);"> 禁止出金
+                                        onclick="changeOutCashStatus('${user.id!}',2);"> 禁止出金
                                 </button>
                                 <button type="button" class="btn btn-success radius" <#if user.chujinType == 1>disabled</#if>
-                                        onclick="jinzhichujin('${user.id!}',1);"> 恢复出金
+                                        onclick="changeOutCashStatus('${user.id!}',1);"> 恢复出金
                                 </button>
                             </#if>
                         </td>
