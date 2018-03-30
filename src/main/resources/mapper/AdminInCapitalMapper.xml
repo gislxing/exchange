@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xr.exchange.dao.AdminInCapitalDao">
+    <resultMap id="baseResultMap" type="com.xr.exchange.model.AdminInCapitalBean">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <id column="admin_id" property="adminId" jdbcType="INTEGER"/>
+        <id column="money" property="money" jdbcType="INTEGER"/>
+        <id column="pay_flag" property="payFlag" jdbcType="INTEGER"/>
+        <id column="pay_time" property="payTime" jdbcType="INTEGER"/>
+        <id column="pay_no" property="payNo" jdbcType="INTEGER"/>
+        <id column="pay_type" property="payType" jdbcType="INTEGER"/>
+        <id column="out_trade_no" property="outTradeNo" jdbcType="INTEGER"/>
+        <id column="remarks" property="remarks" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="base_column_list">
+        t.id,
+        t.admin_id,
+        t.money,
+        t.pay_flag,
+        t.pay_time,
+        t.pay_no,
+        t.pay_type,
+        t.out_trade_no,
+        t.remarks
+    </sql>
+
+</mapper>
