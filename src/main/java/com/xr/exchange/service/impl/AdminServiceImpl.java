@@ -10,8 +10,8 @@ import com.xr.exchange.dao.AdminDao;
 import com.xr.exchange.model.AdminBean;
 import com.xr.exchange.model.ProxyPayVo;
 import com.xr.exchange.model.ProxyPopVo;
-import com.xr.exchange.model.UserPopVo;
 import com.xr.exchange.service.AdminService;
+import com.xr.exchange.utils.PageUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +39,7 @@ public class AdminServiceImpl implements AdminService {
 
     /**
      * 获取用户列表
+     *
      * @param adminListBean
      * @return
      */
@@ -46,58 +47,55 @@ public class AdminServiceImpl implements AdminService {
     public Map<String, Object> getAllAdmin(AdminListBean adminListBean, Integer showLevel, AdminBean loginAdmin) {
         PageHelper.startPage(adminListBean.getPageNum(), adminListBean.getPageSize());
         List<AdminBean> list = adminDao.getAllAdmin(adminListBean, showLevel, loginAdmin);
-
-        // 分页信息包括总页数，当前页，总数据等
-        PageInfo pageInfo = new PageInfo(list);
-        Map<String,Object> map = new HashMap<>();
-        map.put(Const.STR_DATA,list);
-        map.put(Const.STR_PAGE_INFO,pageInfo);
-        return map;
+        return PageUtil.getPageData(list);
     }
 
     /**
      * 保存用户
+     *
      * @param adminBean
      */
     @Override
-    public void saveAdmin(AdminBean adminBean,AdminBean loginAdmin) throws Exception {
+    public void saveAdmin(AdminBean adminBean, AdminBean loginAdmin) throws Exception {
         adminBean.setStatus(1);
         adminBean.setAddTime(new Date());
         adminBean.setMoney(0.00);
         adminDao.saveAdmin(adminBean);
 
-        adminDao.upateKeyId(loginAdmin,adminBean.getId());
+        adminDao.upateKeyId(loginAdmin, adminBean.getId());
     }
 
     /**
      * 验证用户名是否重复
+     *
      * @param adminBean
      * @return
      */
     @Override
     public boolean checkAdmin(AdminBean adminBean) {
         int count = adminDao.getCountAdmin(adminBean);
-        return  count>0?false:true;
+        return count > 0 ? false : true;
     }
 
     /**
      * 登录
+     *
      * @param adminBean
      * @return
      */
     @Override
     public AdminBean loginAdmin(AdminBean adminBean) {
         AdminBean adminBeanSession = adminDao.getCountAdminLogin(adminBean);
-        return  adminBeanSession;
+        return adminBeanSession;
     }
 
     @Override
     public void updateStatus(String username, String status) {
-        if (username == null || username.isEmpty()){
+        if (username == null || username.isEmpty()) {
             return;
         }
 
-        if (status == null || status.isEmpty()){
+        if (status == null || status.isEmpty()) {
             return;
         }
 
@@ -106,7 +104,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void delete(String username) {
-        if (username == null || username.isEmpty()){
+        if (username == null || username.isEmpty()) {
             return;
         }
 
@@ -115,7 +113,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public AdminBean getAdmin(Integer id) {
-        if (id == null){
+        if (id == null) {
             return null;
         }
 
@@ -124,7 +122,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void updateAdmin(AdminBean adminBean) {
-        if (adminBean == null){
+        if (adminBean == null) {
             return;
         }
 
@@ -135,32 +133,21 @@ public class AdminServiceImpl implements AdminService {
     public Integer upPassword(String oldpassword, String password, int id) {
         oldpassword = DigestUtils.md5Hex(oldpassword);
         password = DigestUtils.md5Hex(password);
-        return adminDao.upPassword(oldpassword,password,id);
+        return adminDao.upPassword(oldpassword, password, id);
     }
 
     @Override
     public Map<String, Object> getProxyPayList(ProxyPayListBean proxyPayListBean, AdminBean loginAdmin) {
         PageHelper.startPage(proxyPayListBean.getPageNum(), proxyPayListBean.getPageSize());
-        List<ProxyPayVo> list = adminDao.getProxyPayList(proxyPayListBean,loginAdmin);
-
-        // 分页信息包括总页数，当前页，总数据等
-        PageInfo pageInfo = new PageInfo(list);
-        Map<String,Object> map = new HashMap<>();
-        map.put(Const.STR_DATA,list);
-        map.put(Const.STR_PAGE_INFO,pageInfo);
-        return map;
+        List<ProxyPayVo> list = adminDao.getProxyPayList(proxyPayListBean, loginAdmin);
+        return PageUtil.getPageData(list);
     }
 
     @Override
     public Map<String, Object> getProxyPopList(ProxyPopListBean proxyPopListBean, AdminBean loginAdmin) {
         PageHelper.startPage(proxyPopListBean.getPageNum(), proxyPopListBean.getPageSize());
-        List<ProxyPopVo> list = adminDao.getProxyPopList(proxyPopListBean,loginAdmin);
-        // 分页信息包括总页数，当前页，总数据等
-        PageInfo pageInfo = new PageInfo(list);
-        Map<String,Object> map = new HashMap<>();
-        map.put(Const.STR_DATA,list);
-        map.put(Const.STR_PAGE_INFO,pageInfo);
-        return map;
+        List<ProxyPopVo> list = adminDao.getProxyPopList(proxyPopListBean, loginAdmin);
+        return PageUtil.getPageData(list);
     }
 
     @Override
@@ -168,19 +155,20 @@ public class AdminServiceImpl implements AdminService {
         Boolean ret = true;
         try {
             adminDao.rebutPop(proxyPopVo);
-            adminDao.updateAdminMoney(proxyPopVo.getAdminId(),proxyPopVo.getPopMoney());
-        }catch (Exception ex){
+            adminDao.updateAdminMoney(proxyPopVo.getAdminId(), proxyPopVo.getPopMoney());
+        } catch (Exception ex) {
             ret = false;
             log.error(ex.toString());
         }
         return ret;
     }
+
     @Override
     public Boolean agreePop(ProxyPopVo proxyPopVo) {
         Boolean ret = true;
         try {
             adminDao.rebutPop(proxyPopVo);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ret = false;
             log.error(ex.toString());
         }
