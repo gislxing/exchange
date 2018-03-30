@@ -49,21 +49,13 @@ public class AdminBankCardServiceImpl implements AdminBankCardService {
     @Override
     public boolean delete(int id) {
         int count = adminBankCardDao.delete(id);
-        if (count > 0){
-            return true;
-        }
-
-        return false;
+        return count > 0 ? true : false;
     }
 
     @Override
     public boolean save(AdminBankCardBean adminBankCardBean) {
         int count = adminBankCardDao.save(adminBankCardBean);
-        if (count > 0){
-            return true;
-        }
-
-        return false;
+        return count > 0 ? true : false;
     }
 
 }
