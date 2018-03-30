@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xr.exchange.dao.AdminOutCapitalDao">
+    <resultMap id="baseResultMap" type="com.xr.exchange.model.AdminOutCapitalBean">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <id column="admin_id" property="adminId" jdbcType="INTEGER"/>
+        <id column="pop_money" property="popMoney" jdbcType="FLOAT"/>
+        <id column="pop_time" property="popTime" jdbcType="TIMESTAMP"/>
+        <id column="pop_flag" property="popFlag" jdbcType="INTEGER"/>
+        <id column="pop_name" property="popName" jdbcType="VARCHAR"/>
+        <id column="pop_code" property="popCode" jdbcType="VARCHAR"/>
+        <id column="pop_account" property="popAccount" jdbcType="VARCHAR"/>
+        <id column="pop_phone" property="popPhone" jdbcType="VARCHAR"/>
+        <id column="pop_idcard" property="popIdcard" jdbcType="VARCHAR"/>
+        <id column="pop_paynum" property="popPaynum" jdbcType="VARCHAR"/>
+        <id column="pop_remarks" property="popRemarks" jdbcType="VARCHAR"/>
+        <id column="pop_do" property="popDo" jdbcType="INTEGER"/>
+        <id column="pop_dotime" property="popDotime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="base_column_list">
+        t.id,
+        t.admin_id,
+        t.pop_money,
+        t.pop_time,
+        t.pop_flag,
+        t.pop_name,
+        t.pop_code,
+        t.pop_account,
+        t.pop_phone,
+        t.pop_idcard,
+        t.pop_paynum,
+        t.pop_remarks,
+        t.pop_do,
+        t.pop_dotime
+    </sql>
+
+
+</mapper>

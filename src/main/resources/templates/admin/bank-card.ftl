@@ -32,8 +32,8 @@
     <table class="table table-border table-bordered table-bg">
         <thead>
         <tr class="text-c">
-            <th width="40">银行卡卡号</th>
-            <th width="150">银行名称</th>
+            <th width="150">银行卡卡号</th>
+            <th width="60">银行名称</th>
             <th width="90">户主姓名</th>
             <th width="150">预留手机号</th>
             <th width="130">预留身份证号</th>

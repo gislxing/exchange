@@ -122,4 +122,13 @@ public class AdminMyCapitalController {
         return map;
     }
 
+    /**
+     * 出入金列表
+     * @return
+     */
+    @GetMapping("/capital")
+    public String capitalOutIn(){
+        return "admin/capital-out-in";
+    }
+
 }

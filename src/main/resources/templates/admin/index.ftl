@@ -101,7 +101,7 @@
             <dd>
                 <ul>
                     <li><a data-href="/admin/my/bank/card" data-title="我的银行卡" href="javascript:void(0)">我的银行卡</a></li>
-                    <li><a data-href="/admin/my/" data-title="出入金明细" href="javascript:void(0)">出入金明细</a></li>
+                    <li><a data-href="/admin/my/capital" data-title="出入金明细" href="javascript:void(0)">出入金明细</a></li>
                 </ul>
             </dd>
         </dl>
